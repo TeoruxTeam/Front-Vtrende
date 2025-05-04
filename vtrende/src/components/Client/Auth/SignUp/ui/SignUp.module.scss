@@ -1,0 +1,12 @@
+@import '@vars';
+
+.signUp { 
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 520px;
+}
+
+.error { 
+  @include defaultError;
+}

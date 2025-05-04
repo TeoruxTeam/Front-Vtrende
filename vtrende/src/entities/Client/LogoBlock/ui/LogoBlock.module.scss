@@ -1,0 +1,14 @@
+@import "@vars";
+
+.logoBlock {
+  display: flex;
+  gap: 15px;
+
+  align-items: center;
+  
+  .logoText {
+    font-size: 16px;
+    font-weight: 700;
+    color: $white;
+  }
+}

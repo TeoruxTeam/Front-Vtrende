@@ -1,0 +1,28 @@
+$blue: #0047ab;
+$black: #252525;
+$dark-gray: #404040;
+$light-gray: #575757;
+$gray: #dfe9f2;
+$white: #fff;
+$green: #34C759CC;
+
+$default-transition: 0.3s all;
+$default-opacity: 0.7;
+
+@mixin defaultError {
+  font-size: 10px;
+  margin-top: 10px;
+  color: $blue;
+}
+
+@mixin defaultTitle {
+  color: $black;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+@mixin defaultBigTitle {
+  color: $black;
+  font-weight: 500;
+  font-size: 24px;
+}

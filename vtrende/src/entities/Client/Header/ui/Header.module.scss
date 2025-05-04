@@ -1,0 +1,23 @@
+@import "@vars";
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $black;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  padding: 25px 75px;
+  position: sticky;
+  top: 0;
+
+  .rightPart { 
+    display: flex;
+    align-items: center;
+    gap: 35px;
+  }
+}
+
+.inputClassname { 
+  width: 400px;
+}

@@ -1,0 +1,36 @@
+@import "@vars";
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.checkbox {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 2px solid rgba(233, 233, 233, 1);
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkbox:checked + .checkmark {
+  background-color: #007aff;
+  border-color: #007aff;
+}
+
+.checkbox:checked + .checkmark::after {
+  display: block;
+}

@@ -1,0 +1,77 @@
+@import "@vars";
+
+.authModalInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 50px 60px;
+  border-radius: 20px;
+  background-color: #dfe9f2cc;
+  backdrop-filter: blur(40px);
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+
+    .title {
+      font-size: 32px;
+      font-weight: 600;
+      color: $black;
+    }
+
+    .headerText {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      .text {
+        color: $light-gray;
+      }
+
+      .actionText {
+        color: $blue;
+      }
+    }
+  }
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  border-top: 1px solid #f0f0f6;
+  text-align: center;
+  padding-top: 25px;
+
+  .text {
+    color: var(--light-gray);
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .oAuthButtons { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+
+    .oAuthButton { 
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--white);
+      border: 1px solid #DEDEE9;
+      color: var(--black);
+      font-weight: 400;
+      padding: 15px 12px;
+      border-radius: 8px;
+      
+      &:hover {
+        transition: $default-transition;
+        box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+      }
+    }
+  }
+}

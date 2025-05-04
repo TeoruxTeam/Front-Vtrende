@@ -1,0 +1,47 @@
+@import '@vars';
+
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+  margin-top: 31px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  height: 305px;
+  scrollbar-width: none;
+  background-color: #363636;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #404040;
+    font-family: "Inter", sans-serif;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border: 1px solid rgba(91, 91, 91, 1);
+    height: 100%;
+
+    thead {
+      tr {
+        height: 50px;
+        .table-header {
+          padding: 0.5rem 1rem;
+          text-align: left;
+          font-weight: 600;
+          color: $default-white;
+          border: 1px solid rgb(91, 91, 91);
+          white-space: nowrap;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        .table-cell {
+          padding: 0.5rem 1rem;
+          color: $default-white;
+          border: 1px solid rgb(91, 91, 91);
+        }
+      }
+    }
+  }
+}

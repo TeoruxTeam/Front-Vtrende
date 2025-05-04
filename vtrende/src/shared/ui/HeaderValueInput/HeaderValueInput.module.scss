@@ -1,0 +1,66 @@
+@import '@vars';
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+
+  .labelWrapper {
+    position: absolute;
+    top: -8px;
+    left: 2px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    padding: 0 5px;
+
+    .label {
+      font-size: 14px;
+      color: $medium-gray;
+      background: white;
+      z-index: 10;
+      padding: 0 5px;
+    }
+
+    .labelLine {
+      flex-grow: 1;
+      height: 1px;
+      background: #ccc;
+      margin-left: 8px;
+    }
+  }
+
+  .inputWrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 10px;
+    transition: border-color 0.3s ease;
+    position: relative;
+
+    &:focus-within {
+      border-color: #000;
+    }
+
+    .input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      background: transparent;
+      z-index: 10;
+    }
+  }
+
+  .icon { 
+    padding-right: 5px;
+  }
+
+  .errorText { 
+    font-size: 10px;
+    color: $blue;
+    opacity: 0.5;
+  }
+}

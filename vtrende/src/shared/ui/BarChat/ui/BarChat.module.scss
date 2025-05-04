@@ -1,0 +1,19 @@
+.barChart {
+  display: block;
+  overflow: visible;
+}
+
+.bar {
+  transition: height 0.3s ease-in-out;
+}
+
+.label {
+  font-size: 12px;
+  fill: #333;
+}
+
+.value {
+  font-size: 12px;
+  fill: #000;
+  font-weight: 500;
+}

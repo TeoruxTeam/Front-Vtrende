@@ -1,0 +1,21 @@
+@import "@vars";
+
+.codeContainer {
+  display: flex;
+  gap: 10px;
+
+  .codeInput {
+    width: 70px;
+    height: 70px;
+    border: 1px solid rgba(205, 207, 212, 1);
+    border-radius: 4px;
+    text-align: center;
+    background-color: rgba(253, 253, 252, 1);
+    color: rgba(86, 93, 106, 1);
+
+    &:focus {
+      transition: $default-transition;
+      border: 1px solid rgba(86, 93, 106, 1);
+    }
+  }
+}
