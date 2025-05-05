@@ -13,12 +13,11 @@ export interface ISignIn {
   password: ISignUp["password"];
 }
 
-interface IAuthCommonFields {
+export interface IAuthCommonFields {
   email: string;
   password: string;
 }
 
-// Валидация для общих полей
 export const authValidate: {
   [K in keyof IAuthCommonFields]: RegisterOptions<IAuthCommonFields, K>;
 } = {

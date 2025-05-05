@@ -3,11 +3,13 @@ import { setAuthTokens } from "@/src/shared/hooks/setAuthTokens";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useGetMe } from "../../../modal/hooks/getMe";
-import { IAuthResponseData, ISignIn } from "../../validate/authValidate";
+import {
+  IAuthResponseData,
+  ISignIn,
+} from "../../../AuthModal/validate/authValidate";
 
 export const useSignIn = ({ handleClose }: { handleClose: () => void }) => {
-  const { refetch: userInfo } = useGetMe();
+  // const { refetch: userInfo } = useGetMe();
 
   const {
     register,
@@ -39,7 +41,7 @@ export const useSignIn = ({ handleClose }: { handleClose: () => void }) => {
       });
       toast.success("Успешно!");
       handleClose();
-      userInfo();
+      // userInfo();
     },
     onError: () => {
       toast.error("Что-то пошло не так");

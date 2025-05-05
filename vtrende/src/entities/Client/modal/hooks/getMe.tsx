@@ -9,6 +9,5 @@ export const useGetMe = () => {
       const response = await api.get<{ data: IUser }>("/profile/me/");
       return response.data;
     },
-    enabled: false,
   });
 };

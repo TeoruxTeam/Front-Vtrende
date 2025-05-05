@@ -1,7 +1,10 @@
 import { Modal } from "@/src/shared/ui/Modal/Modal";
 import { FC, useEffect, useState } from "react";
-import { SignIn } from "../../SignIn/ui/SignIn";
-import { SignUp } from "../../SignUp/ui/SignUp";
+import { SignIn } from "../../AuthModalInfo/SignIn/ui/SignIn";
+import { SignUp } from "../../AuthModalInfo/SignUp/ui/SignUp";
+import { ConfirmEmail } from "../../EmailActionsModal/ConfirmEmail/ui/ConfirmEmail";
+import { RecoveryEmail } from "../../EmailActionsModal/RecoveryEmail/ui/RecoveryEmail";
+import { RecoveryPassword } from "../../EmailActionsModal/RecoveryPassword/ui/RecoveryPassword";
 
 export type IAuthClientModalType =
   | "sign in"
@@ -17,7 +20,7 @@ interface IAuthModalProps {
 
 export const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
   const [currentModalType, setCurrentModalType] =
-    useState<IAuthClientModalType | null>("sign up");
+    useState<IAuthClientModalType | null>("password recovery email");
 
   const openModalFn = (type: IAuthClientModalType) => {
     setCurrentModalType(type);
@@ -30,7 +33,7 @@ export const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (isOpen && !currentModalType) {
-      setCurrentModalType("sign up");
+      setCurrentModalType("password recovery email");
     }
   }, [isOpen, currentModalType]);
 
@@ -53,37 +56,16 @@ export const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
           />
         );
       case "confirm email":
-        return (
-          <div>
-            <h2>Confirm Email</h2>
-            <p>
-              Code: <input type="text" placeholder="657345" />
-            </p>
-            <button onClick={handleClose}>Confirm</button>
-          </div>
-        );
+        return <ConfirmEmail />;
       case "password recovery email":
         return (
-          <div>
-            <h2>Password Recovery</h2>
-            <p>
-              Email: <input type="email" placeholder="example@mail.ru" />
-            </p>
-            <button onClick={handleClose}>Send Recovery Email</button>
-          </div>
+          <RecoveryEmail onFooterButtonClick={() => openModalFn("sign in")} />
         );
       case "password recovery passwords":
         return (
-          <div>
-            <h2>New Password</h2>
-            <p>
-              New Password: <input type="password" placeholder="••••••••" />
-            </p>
-            <p>
-              Confirm Password: <input type="password" placeholder="••••••••" />
-            </p>
-            <button onClick={handleClose}>Save New Password</button>
-          </div>
+          <RecoveryPassword
+            onFooterButtonClick={() => openModalFn("sign in")}
+          />
         );
       default:
         return <div>Unknown modal type</div>;

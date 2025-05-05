@@ -5,8 +5,7 @@ import styles from "./Button.module.scss";
 export enum IButtonTheme {
   BLUE = 'blue',
   GRAY = 'gray',
-  PURPLE =  'purple',
-  LIGHT = 'light'
+  WHITE = 'white'
 }
 
 export enum IButtonSize {

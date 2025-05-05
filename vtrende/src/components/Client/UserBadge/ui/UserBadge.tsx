@@ -1,16 +1,19 @@
+"use client";
 import defaultUserIcon from "@/public/defaultUserAvatar.svg";
+import { useGetMe } from "@/src/entities/Client/modal/hooks/getMe";
 import Image from "next/image";
 import { useState } from "react";
 import { AuthModal } from "../../Auth/AuthModal/ui/AuthModal";
-import { useGetMe } from "../../modal/hooks/getMe";
 import styles from "./UserBadge.module.scss";
 
 export const UserBadge = () => {
   const [openModal, setOpenModal] = useState(false);
   const { data } = useGetMe();
+
   if (data?.data.email) {
-    <p>dsds</p>;
+    return <p>das</p>;
   }
+
   return (
     <>
       <div className={styles.profile}>
@@ -25,7 +28,9 @@ export const UserBadge = () => {
           Зарегестрируйтесь
         </button>
       </div>
-      <AuthModal isOpen={!!openModal} onClose={() => setOpenModal(false)} />
+      {openModal && (
+        <AuthModal isOpen={openModal} onClose={() => setOpenModal(false)} />
+      )}
     </>
   );
 };

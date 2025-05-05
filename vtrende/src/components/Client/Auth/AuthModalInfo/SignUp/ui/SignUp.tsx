@@ -1,7 +1,7 @@
 import { Button, IButtonTheme } from "@/src/shared/ui/Button/Button";
 import InputWithLabel from "@/src/shared/ui/InputWithLabel/ui/InputWithLabel";
-import { AuthModalInfo } from "../../AuthModalInfo/ui/AuthModalInfo";
-import { authValidate } from "../../validate/authValidate";
+import { authValidate } from "../../../AuthModal/validate/authValidate";
+import { AuthModalInfo } from "../../ui/AuthModalInfo";
 import { useSignUp } from "../modal/useSignUp";
 import styles from "./SignUp.module.scss";
 
@@ -20,7 +20,7 @@ export const SignUp = ({
     passwordStrength,
     register,
     password,
-  } = useSignUp({handleClose});
+  } = useSignUp({ handleClose });
 
   return (
     <AuthModalInfo

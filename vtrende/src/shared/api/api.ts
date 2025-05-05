@@ -1,24 +1,19 @@
 import axios from "axios";
-import { getCookie, setCookie } from "cookies-next";
-import { removeTokens } from "../hooks/removeTokens";
+import { getCookie } from "cookies-next";
 import { CookiesInfo } from "../types/cookiesInfo";
-import { authTypeReturn } from "../types/dataTypes";
-import { Routes } from "../routes/routes";
 
-export const API_BASE_URL = "https://api.vtrende.kz";
+export const API_BASE_URL = "https://api.vtrende.kz/";
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
-  
 });
 
 api.interceptors.request.use(
   (config) => {
-    const accessToken = getCookie(CookiesInfo.ACCESS_TOKEN);
-    console.log(accessToken)
+    const accessToken = getCookie(CookiesInfo.REFRESH_TOKEN);
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -27,91 +22,82 @@ api.interceptors.request.use(
   () => console.log("Ошибка при отправке запроса")
 );
 
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
+// api.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      const accessToken = getCookie(CookiesInfo.ACCESS_TOKEN);
-      const refreshToken = getCookie(CookiesInfo.REFRESH_TOKEN);
+//     if (error.response?.status === 401 && !originalRequest._retry) {
+//       const accessToken = getCookie(CookiesInfo.ACCESS_TOKEN);
+//       const refreshToken = getCookie(CookiesInfo.REFRESH_TOKEN);
 
-      if (accessToken && refreshToken) {
-        removeTokens();
-      }
-    }
+//       if (accessToken && refreshToken) {
+//         removeTokens();
+//       }
+//     }
 
-    return Promise.reject(error);
-  }
-);
+//     return Promise.reject(error);
+//   }
+// );
 
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
+// api.interceptors.response.use(
+//   (response) => response,
+//   async (error) => {
+//     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+//     if (error.response?.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true;
 
-      const refreshToken = getCookie(CookiesInfo.REFRESH_TOKEN);
+//       const refreshToken = getCookie(CookiesInfo.REFRESH_TOKEN);
 
+//       if (!refreshToken) {
+//         removeTokens();
+//         window.location.href = Routes.AUTH;
+//         return Promise.reject(error);
+//       }
 
+//       try {
+//         const { data } = await axios.post<authTypeReturn>(
+//           `https://api.vtrende.kz/auth/refresh-token`,
+//           {
+//             refresh_token: refreshToken,
+//           }
+//         );
 
-      if (!refreshToken) {
-        removeTokens();
-        window.location.href = Routes.AUTH;
-        return Promise.reject(error);
-      }
+//         setCookie(CookiesInfo.ACCESS_TOKEN, data.data.access_token, {
+//           expires: new Date(data.data.access_expiration),
+//         });
 
-      try {
-        const { data } = await axios.post<authTypeReturn>(
-          `https://api.vtrende.kz/auth/refresh-token`,
-          {
-            refresh_token: refreshToken,
-          }
-        );
+//         setCookie(CookiesInfo.REFRESH_TOKEN, data.data.refresh_token, {
+//           expires: new Date(data.data.refresh_expiration),
+//         });
 
-        console.log(refreshToken)
+//         originalRequest.headers.Authorization = `Bearer ${data.data.access_token}`;
 
-        setCookie(CookiesInfo.ACCESS_TOKEN, data.data.access_token, {
-          expires: new Date(data.data.access_expiration),
-        });
+//         return axios(originalRequest);
+//       } catch (refreshError) {
+//         removeTokens();
+//         window.location.href = Routes.AUTH;
 
-        setCookie(CookiesInfo.REFRESH_TOKEN, data.data.refresh_token, {
-          expires: new Date(data.data.refresh_expiration),
-        });
+//         return Promise.reject(refreshError);
+//       }
+//     }
 
-        originalRequest.headers.Authorization = `Bearer ${data.data.access_token}`;
+//     return Promise.reject(error);
+//   }
+// );
 
-        return axios(originalRequest);
-      } catch (refreshError) {
-
-
-        removeTokens();
-        window.location.href = Routes.AUTH;
-
-        return Promise.reject(refreshError);
-      }
-    }
-
-    return Promise.reject(error);
-  }
-);
-
-api.interceptors.request.use(
-  (config) => {
-    const refreshToken = getCookie(CookiesInfo.REFRESH_TOKEN);
-    const accessToken = getCookie(CookiesInfo.ACCESS_TOKEN);
-    if (!refreshToken && accessToken) {
-      removeTokens();
-      window.location.href = Routes.AUTH;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
-
-
+// api.interceptors.request.use(
+//   (config) => {
+//     const refreshToken = getCookie(CookiesInfo.REFRESH_TOKEN);
+//     const accessToken = getCookie(CookiesInfo.ACCESS_TOKEN);
+//     if (!refreshToken && accessToken) {
+//       removeTokens();
+//       window.location.href = Routes.AUTH;
+//     }
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
 
 export default api;

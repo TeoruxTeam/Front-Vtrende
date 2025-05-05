@@ -1,7 +1,9 @@
 import { Button, IButtonTheme } from "@/src/shared/ui/Button/Button";
 import InputWithLabel from "@/src/shared/ui/InputWithLabel/ui/InputWithLabel";
-import { AuthModalInfo } from "../../AuthModalInfo/ui/AuthModalInfo";
-import { authValidate } from "../../validate/authValidate";
+import {
+  authValidate,
+} from "../../../AuthModal/validate/authValidate";
+import { AuthModalInfo } from "../../ui/AuthModalInfo";
 import { useSignIn } from "../modal/useSignIn";
 import styles from "./SignIn.module.scss";
 
@@ -12,7 +14,9 @@ export const SignIn = ({
   textActionFn: () => void;
   handleClose: () => void;
 }) => {
-  const { handleSubmit, register, onSubmit, errors, isValid } = useSignIn({handleClose});
+  const { handleSubmit, register, onSubmit, errors, isValid } = useSignIn({
+    handleClose,
+  });
 
   return (
     <AuthModalInfo

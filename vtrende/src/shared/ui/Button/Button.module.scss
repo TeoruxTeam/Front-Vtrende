@@ -2,7 +2,7 @@
 
 .button {
   padding: 14px;
-  border-radius: 12px;
+  border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   transition: $default-transition;
@@ -37,19 +37,20 @@
   }
 }
 
-.purple {
-  background-color: rgba(70, 95, 241, 1);
-  // color: $default-white;
-}
+.white { 
+  background-color: var(--white);
+  border-radius: 8px;
+  color: var(--blue);
+  font-size: 16px;
+  font-weight: 400;
+  transition: $default-transition;
 
-.light {
-  // background-color: $rad;
-  // color: $default-white;
-
-  &:hover {
-    opacity: 0.8;
+  &:hover { 
+    background-color: var(--blue);
+    color: var(--white);
   }
 }
+
 
 .small {
   padding: 10px;

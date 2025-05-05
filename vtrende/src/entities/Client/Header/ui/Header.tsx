@@ -8,7 +8,6 @@ import styles from "./Header.module.scss";
 
 export const Header = () => {
   const [searchInfo, setSearchInfo] = useState<string>("");
-
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchInfo(e.target.value);
   };
