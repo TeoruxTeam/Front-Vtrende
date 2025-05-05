@@ -1,7 +1,8 @@
 import { Layout } from "@/src/entities/Client";
+import "@styles";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import '@styles'
+import { Toaster } from "react-hot-toast";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en" className={roboto.className}>
       <body>
         <Layout>{children}</Layout>
+        <Toaster />
       </body>
     </html>
   );

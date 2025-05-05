@@ -1,12 +1,48 @@
-@import '@vars';
+@import "@vars";
 
-.signUp { 
+.signUp {
   display: flex;
   flex-direction: column;
   gap: 15px;
   width: 520px;
 }
 
-.error { 
+.passwordStrength {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  .headerPasswordStrengthHeight {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .label {
+      font-size: 14px;
+      font-weight: 400;
+      color: #1c1c1e;
+    }
+
+    .strength {
+      font-size: 14px;
+      font-weight: 400;
+    }
+  }
+}
+
+.progressBar {
+  flex-grow: 1;
+  height: 6px;
+  background-color: #ccc;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.error {
   @include defaultError;
 }

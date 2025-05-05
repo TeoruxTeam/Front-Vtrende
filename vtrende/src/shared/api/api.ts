@@ -5,18 +5,20 @@ import { CookiesInfo } from "../types/cookiesInfo";
 import { authTypeReturn } from "../types/dataTypes";
 import { Routes } from "../routes/routes";
 
-const API_BASE_URL = "https://api.youtubesoft.ru/";
+export const API_BASE_URL = "https://api.vtrende.kz";
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
+  
 });
 
 api.interceptors.request.use(
   (config) => {
     const accessToken = getCookie(CookiesInfo.ACCESS_TOKEN);
+    console.log(accessToken)
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -63,7 +65,7 @@ api.interceptors.response.use(
 
       try {
         const { data } = await axios.post<authTypeReturn>(
-          `https://api.youtubesoft.ru/auth/refresh-token/`,
+          `https://api.vtrende.kz/auth/refresh-token`,
           {
             refresh_token: refreshToken,
           }

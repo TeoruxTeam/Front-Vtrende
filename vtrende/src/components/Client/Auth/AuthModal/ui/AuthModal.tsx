@@ -1,5 +1,6 @@
 import { Modal } from "@/src/shared/ui/Modal/Modal";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
+import { SignIn } from "../../SignIn/ui/SignIn";
 import { SignUp } from "../../SignUp/ui/SignUp";
 
 export type IAuthClientModalType =
@@ -12,36 +13,44 @@ export type IAuthClientModalType =
 interface IAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  openModalType: IAuthClientModalType;
 }
 
-export const AuthModal: FC<IAuthModalProps> = ({
-  isOpen,
-  onClose,
-  openModalType,
-}) => {
-  if (!isOpen) return null;
+export const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
+  const [currentModalType, setCurrentModalType] =
+    useState<IAuthClientModalType | null>("sign up");
+
+  const openModalFn = (type: IAuthClientModalType) => {
+    setCurrentModalType(type);
+  };
+
+  const handleClose = () => {
+    onClose();
+    setCurrentModalType(null);
+  };
+
+  useEffect(() => {
+    if (isOpen && !currentModalType) {
+      setCurrentModalType("sign up");
+    }
+  }, [isOpen, currentModalType]);
 
   const renderModalContent = () => {
-    switch (openModalType) {
+    if (!currentModalType) return null;
+
+    switch (currentModalType) {
       case "sign in":
         return (
-          <div>
-            <h2>Sign In</h2>
-            <p>
-              Email: <input type="email" placeholder="example@mail.ru" />
-            </p>
-            <p>
-              Password: <input type="password" placeholder="••••••••" />
-            </p>
-            <button onClick={onClose}>Login</button>
-          </div>
+          <SignIn
+            textActionFn={() => openModalFn("sign up")}
+            handleClose={handleClose}
+          />
         );
       case "sign up":
         return (
-          <Modal isOpen={isOpen} onClose={onClose}>
-            <SignUp />
-          </Modal>
+          <SignUp
+            actionTextFn={() => openModalFn("sign in")}
+            handleClose={handleClose}
+          />
         );
       case "confirm email":
         return (
@@ -50,7 +59,7 @@ export const AuthModal: FC<IAuthModalProps> = ({
             <p>
               Code: <input type="text" placeholder="657345" />
             </p>
-            <button onClick={onClose}>Confirm</button>
+            <button onClick={handleClose}>Confirm</button>
           </div>
         );
       case "password recovery email":
@@ -60,7 +69,7 @@ export const AuthModal: FC<IAuthModalProps> = ({
             <p>
               Email: <input type="email" placeholder="example@mail.ru" />
             </p>
-            <button onClick={onClose}>Send Recovery Email</button>
+            <button onClick={handleClose}>Send Recovery Email</button>
           </div>
         );
       case "password recovery passwords":
@@ -73,7 +82,7 @@ export const AuthModal: FC<IAuthModalProps> = ({
             <p>
               Confirm Password: <input type="password" placeholder="••••••••" />
             </p>
-            <button onClick={onClose}>Save New Password</button>
+            <button onClick={handleClose}>Save New Password</button>
           </div>
         );
       default:
@@ -82,12 +91,8 @@ export const AuthModal: FC<IAuthModalProps> = ({
   };
 
   return (
-    <div
-      style={{
-        position: "fixed",
-      }}
-    >
+    <Modal isOpen={isOpen} onClose={handleClose}>
       {renderModalContent()}
-    </div>
+    </Modal>
   );
 };

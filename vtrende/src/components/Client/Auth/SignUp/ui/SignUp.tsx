@@ -1,56 +1,39 @@
 import { Button, IButtonTheme } from "@/src/shared/ui/Button/Button";
 import InputWithLabel from "@/src/shared/ui/InputWithLabel/ui/InputWithLabel";
-import { useForm } from "react-hook-form";
 import { AuthModalInfo } from "../../AuthModalInfo/ui/AuthModalInfo";
+import { authValidate } from "../../validate/authValidate";
+import { useSignUp } from "../modal/useSignUp";
 import styles from "./SignUp.module.scss";
 
-interface SignUpFormData {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-export const SignUp = () => {
+export const SignUp = ({
+  actionTextFn,
+  handleClose,
+}: {
+  actionTextFn: () => void;
+  handleClose: () => void;
+}) => {
   const {
-    register,
+    errors,
     handleSubmit,
-    formState: { errors, isValid },
-    watch,
-  } = useForm<SignUpFormData>({
-    mode: "onSubmit",
-    defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
-  const onSubmit = (data: SignUpFormData) => {
-    console.log("Form submitted:", data);
-  };
-
-  const password = watch("password");
-
-  console.log(password);
+    isValid,
+    onSubmit,
+    passwordStrength,
+    register,
+    password,
+  } = useSignUp({handleClose});
 
   return (
     <AuthModalInfo
       actionText="Войти"
       text="Уже зарегестрированы?"
       title="Регистрация"
-      actionTextFn={() => console.log(1)}
+      actionTextFn={actionTextFn}
     >
       <form className={styles.signUp} onSubmit={handleSubmit(onSubmit)}>
         <InputWithLabel
           label="Ваша почта"
           placeholder="Введите почту"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^\S+@\S+\.\S+$/,
-              message: "Invalid email format",
-            },
-          })}
+          {...register("email", authValidate.email)}
           error={errors?.email?.message}
         />
 
@@ -58,13 +41,7 @@ export const SignUp = () => {
           label="Придумайте пароль"
           placeholder="Ваш пароль"
           type="password"
-          {...register("password", {
-            required: "Password is required",
-            minLength: {
-              value: 6,
-              message: "Password must be at least 6 characters",
-            },
-          })}
+          {...register("password", authValidate.password)}
           error={errors?.password?.message}
         />
 
@@ -73,11 +50,32 @@ export const SignUp = () => {
           placeholder="Ваш пароль"
           type="password"
           {...register("confirmPassword", {
-            required: "Confirm password is required",
-            validate: (value) => value === password || "Passwords do not match",
+            required: "Подтверждение пароля обязательно",
+            validate: (value) => value === password || "Пароли не совпадают",
           })}
           error={errors?.confirmPassword?.message}
         />
+
+        <div className={styles.passwordStrength}>
+          <div className={styles.headerPasswordStrengthHeight}>
+            <span className={styles.label}>Защита пароля:</span>
+            <span
+              className={styles.strength}
+              style={{ color: passwordStrength.color }}
+            >
+              {passwordStrength.strength}
+            </span>
+          </div>
+          <div className={styles.progressBar}>
+            <div
+              className={styles.progress}
+              style={{
+                width: passwordStrength.width,
+                backgroundColor: passwordStrength.color,
+              }}
+            />
+          </div>
+        </div>
 
         <Button
           type="submit"
