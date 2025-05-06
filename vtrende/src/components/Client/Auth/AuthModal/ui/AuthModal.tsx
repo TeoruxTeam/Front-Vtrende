@@ -1,5 +1,6 @@
 import { Modal } from "@/src/shared/ui/Modal/Modal";
-import { FC, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { SignIn } from "../../AuthModalInfo/SignIn/ui/SignIn";
 import { SignUp } from "../../AuthModalInfo/SignUp/ui/SignUp";
 import { ConfirmEmail } from "../../EmailActionsModal/ConfirmEmail/ui/ConfirmEmail";
@@ -16,26 +17,42 @@ export type IAuthClientModalType =
 interface IAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialModalType?: IAuthClientModalType;
+  isNotVerified: boolean;
+  setIsNotVerified: Dispatch<SetStateAction<boolean>>;
 }
 
-export const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
+export const AuthModal: FC<IAuthModalProps> = ({
+  isOpen,
+  onClose,
+  initialModalType = "sign up",
+  isNotVerified,
+  setIsNotVerified,
+}) => {
   const [currentModalType, setCurrentModalType] =
-    useState<IAuthClientModalType | null>("password recovery email");
+    useState<IAuthClientModalType | null>(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      setCurrentModalType(initialModalType!);
+    }
+  }, [isOpen, initialModalType]);
 
   const openModalFn = (type: IAuthClientModalType) => {
     setCurrentModalType(type);
   };
 
   const handleClose = () => {
+    if (isNotVerified && currentModalType === "confirm email") {
+      toast.error("Необходимо подтвердить email перед закрытием!");
+      return;
+    }
     onClose();
     setCurrentModalType(null);
+    const url = new URL(window.location.href);
+    url.searchParams.delete("reset_code");
+    window.history.replaceState({}, document.title, url.toString());
   };
-
-  useEffect(() => {
-    if (isOpen && !currentModalType) {
-      setCurrentModalType("password recovery email");
-    }
-  }, [isOpen, currentModalType]);
 
   const renderModalContent = () => {
     if (!currentModalType) return null;
@@ -46,15 +63,12 @@ export const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
           <SignIn
             textActionFn={() => openModalFn("sign up")}
             handleClose={handleClose}
+            openModalFn={openModalFn}
+            setIsNotVerified={setIsNotVerified}
           />
         );
       case "sign up":
-        return (
-          <SignUp
-            actionTextFn={() => openModalFn("sign in")}
-            handleClose={handleClose}
-          />
-        );
+        return <SignUp actionTextFn={openModalFn} handleClose={handleClose} />;
       case "confirm email":
         return <ConfirmEmail />;
       case "password recovery email":
@@ -64,7 +78,8 @@ export const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
       case "password recovery passwords":
         return (
           <RecoveryPassword
-            onFooterButtonClick={() => openModalFn("sign in")}
+            onFooterButtonClick={handleClose}
+            handleClose={handleClose}
           />
         );
       default:
@@ -73,7 +88,11 @@ export const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={handleClose}
+      disableClose={isNotVerified && currentModalType === "confirm email"}
+    >
       {renderModalContent()}
     </Modal>
   );

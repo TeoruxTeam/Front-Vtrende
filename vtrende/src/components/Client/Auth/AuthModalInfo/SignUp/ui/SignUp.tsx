@@ -1,5 +1,6 @@
 import { Button, IButtonTheme } from "@/src/shared/ui/Button/Button";
 import InputWithLabel from "@/src/shared/ui/InputWithLabel/ui/InputWithLabel";
+import { IAuthClientModalType } from "../../../AuthModal/ui/AuthModal";
 import { authValidate } from "../../../AuthModal/validate/authValidate";
 import { AuthModalInfo } from "../../ui/AuthModalInfo";
 import { useSignUp } from "../modal/useSignUp";
@@ -9,7 +10,7 @@ export const SignUp = ({
   actionTextFn,
   handleClose,
 }: {
-  actionTextFn: () => void;
+  actionTextFn: (type: IAuthClientModalType) => void;
   handleClose: () => void;
 }) => {
   const {
@@ -20,14 +21,14 @@ export const SignUp = ({
     passwordStrength,
     register,
     password,
-  } = useSignUp({ handleClose });
+  } = useSignUp({ handleClose, openConfirmationModal: actionTextFn });
 
   return (
     <AuthModalInfo
       actionText="Войти"
       text="Уже зарегестрированы?"
       title="Регистрация"
-      actionTextFn={actionTextFn}
+      actionTextFn={() => actionTextFn("sign in")}
     >
       <form className={styles.signUp} onSubmit={handleSubmit(onSubmit)}>
         <InputWithLabel

@@ -3,7 +3,7 @@ import { EmailActionsModal } from "../../ui/EmailActionsModal";
 import { useConfirmEmail } from "../modal/useConfirmEmail";
 
 export const ConfirmEmail = () => {
-  const { handleSubmit, register, onSubmit } = useConfirmEmail();
+  const { handleSubmit, register, onSubmit, loading } = useConfirmEmail();
 
   return (
     <EmailActionsModal
@@ -14,6 +14,7 @@ export const ConfirmEmail = () => {
       footerButtonTextFn={() => console.log(1)}
       submitButtonText="Подтвердить"
       onSubmit={handleSubmit(onSubmit)}
+      disabledButton={loading}
     >
       <InputWithLabel
         label="Код"

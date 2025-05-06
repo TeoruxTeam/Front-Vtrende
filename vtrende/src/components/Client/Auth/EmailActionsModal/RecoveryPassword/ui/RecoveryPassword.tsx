@@ -5,10 +5,14 @@ import { useRecoveryPassword } from "../modal/useRecoveryPassword";
 
 export const RecoveryPassword = ({
   onFooterButtonClick,
+  handleClose,
 }: {
   onFooterButtonClick: () => void;
+  handleClose: () => void;
 }) => {
-  const { handleSubmit, onSubmit, register, errors } = useRecoveryPassword();
+  const { handleSubmit, onSubmit, register, errors } = useRecoveryPassword({
+    handleClose,
+  });
 
   return (
     <EmailActionsModal

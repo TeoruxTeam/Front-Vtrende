@@ -13,7 +13,7 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const accessToken = getCookie(CookiesInfo.REFRESH_TOKEN);
+    const accessToken = getCookie(CookiesInfo.ACCESS_TOKEN);
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

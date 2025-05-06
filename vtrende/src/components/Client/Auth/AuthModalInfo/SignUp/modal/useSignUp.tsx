@@ -4,12 +4,19 @@ import { IError } from "@/src/shared/types/cookiesInfo";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { IAuthClientModalType } from "../../../AuthModal/ui/AuthModal";
 import {
   IAuthResponseData,
   ISignUp,
 } from "../../../AuthModal/validate/authValidate";
 
-export const useSignUp = ({ handleClose }: { handleClose: () => void }) => {
+export const useSignUp = ({
+  // handleClose,
+  openConfirmationModal,
+}: {
+  handleClose: () => void;
+  openConfirmationModal: (type: IAuthClientModalType) => void;
+}) => {
   // const { refetch: refetchUserInfo } = useGetMe();
 
   const {
@@ -61,8 +68,9 @@ export const useSignUp = ({ handleClose }: { handleClose: () => void }) => {
         refreshExpiration: data.data.refresh_expiration,
         refreshToken: data.data.refresh_token,
       });
-      toast.success("Успешно!");
-      handleClose();
+      toast.success("Успешно! На вашу почту отправлен код");
+      openConfirmationModal("confirm email");
+      // handleClose();
       // refetchUserInfo();
     },
     onError: (error: IError) => {

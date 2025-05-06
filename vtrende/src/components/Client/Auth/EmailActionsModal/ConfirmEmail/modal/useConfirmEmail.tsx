@@ -42,6 +42,7 @@ export const useConfirmEmail = () => {
   return {
     register,
     handleSubmit,
-    onSubmit
+    onSubmit,
+    loading: sendVerifyCode.isPending
   };
 };

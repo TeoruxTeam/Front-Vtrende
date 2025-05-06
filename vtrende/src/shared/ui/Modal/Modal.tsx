@@ -10,6 +10,7 @@ interface ModalProps {
     modalOverlayStyles?: string;
     modalContentStyles?: string;
   };
+  disableClose?: boolean;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -17,13 +18,20 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   children,
   className,
+  disableClose
 }) => {
   if (!isOpen) return null;
+
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!disableClose && e.target === e.currentTarget) {
+      onClose();
+    }
+  };
 
   return (
     <div
       className={classNames(styles.overlay, className?.modalOverlayStyles)}
-      onClick={onClose}
+      onClick={handleOverlayClick}
     >
       <div
         className={classNames(

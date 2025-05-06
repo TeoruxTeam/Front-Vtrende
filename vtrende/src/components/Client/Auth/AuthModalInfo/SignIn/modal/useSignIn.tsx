@@ -1,6 +1,8 @@
 import api from "@/src/shared/api/api";
 import { setAuthTokens } from "@/src/shared/hooks/setAuthTokens";
 import { useMutation } from "@tanstack/react-query";
+import { jwtDecode } from "jwt-decode";
+import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import {
@@ -8,9 +10,15 @@ import {
   ISignIn,
 } from "../../../AuthModal/validate/authValidate";
 
-export const useSignIn = ({ handleClose }: { handleClose: () => void }) => {
-  // const { refetch: userInfo } = useGetMe();
-
+export const useSignIn = ({
+  handleClose,
+  openAnotherModal,
+  setIsNotVerified,
+}: {
+  handleClose: () => void;
+  openAnotherModal: () => void;
+  setIsNotVerified: Dispatch<SetStateAction<boolean>>;
+}) => {
   const {
     register,
     handleSubmit,
@@ -33,6 +41,9 @@ export const useSignIn = ({ handleClose }: { handleClose: () => void }) => {
       return response.data;
     },
     onSuccess: (data: IAuthResponseData) => {
+      const decodedToken: { verified?: boolean } = jwtDecode(
+        data.data.access_token
+      );
       setAuthTokens({
         accessExpiration: data.data.access_expiration,
         accessToken: data.data.access_token,
@@ -40,8 +51,12 @@ export const useSignIn = ({ handleClose }: { handleClose: () => void }) => {
         refreshToken: data.data.refresh_token,
       });
       toast.success("Успешно!");
-      handleClose();
-      // userInfo();
+      if (decodedToken.verified === false) {
+        openAnotherModal();
+        setIsNotVerified(true)
+      } else {
+        handleClose();
+      }
     },
     onError: () => {
       toast.error("Что-то пошло не так");

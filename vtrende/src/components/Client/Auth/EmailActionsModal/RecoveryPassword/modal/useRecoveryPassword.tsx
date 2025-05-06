@@ -1,9 +1,14 @@
 import api from "@/src/shared/api/api";
 import { useMutation } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
-const useSendRecoveryPassword = () => {
+const useSendRecoveryPassword = ({
+  handleClose,
+}: {
+  handleClose: () => void;
+}) => {
   const sendRecoveryPassword = useMutation({
     mutationKey: ["send_recovery_password"],
     mutationFn: async ({
@@ -21,6 +26,10 @@ const useSendRecoveryPassword = () => {
     },
     onSuccess: () => {
       toast.success("Успешно! Пароль изменен");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("reset_code");
+      window.history.replaceState({}, document.title, url.toString());
+      handleClose();
     },
     onError: () => {
       toast.error("Что-то пошло не так");
@@ -32,8 +41,14 @@ const useSendRecoveryPassword = () => {
   };
 };
 
-export const useRecoveryPassword = () => {
-  const { sendRecoveryPassword } = useSendRecoveryPassword();
+export const useRecoveryPassword = ({
+  handleClose,
+}: {
+  handleClose: () => void;
+}) => {
+  const { sendRecoveryPassword } = useSendRecoveryPassword({ handleClose });
+  const searchParams = useSearchParams();
+  const resetCode = searchParams.get("reset_code");
 
   const {
     register,
@@ -51,7 +66,10 @@ export const useRecoveryPassword = () => {
   });
 
   const onSubmit = (data: { password: string }) => {
-    sendRecoveryPassword.mutate({ token: "", new_password: data.password });
+    sendRecoveryPassword.mutate({
+      token: resetCode!,
+      new_password: data.password,
+    });
   };
 
   return {
