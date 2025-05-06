@@ -1,6 +1,8 @@
 import axios from "axios";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
+import { removeTokens } from "../hooks/removeTokens";
 import { CookiesInfo } from "../types/cookiesInfo";
+import { authTypeReturn } from "../types/dataTypes";
 
 export const API_BASE_URL = "https://api.vtrende.kz/";
 
@@ -40,52 +42,49 @@ api.interceptors.request.use(
 //   }
 // );
 
-// api.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
 
-//     if (error.response?.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
 
-//       const refreshToken = getCookie(CookiesInfo.REFRESH_TOKEN);
+      const refreshToken = getCookie(CookiesInfo.REFRESH_TOKEN);
 
-//       if (!refreshToken) {
-//         removeTokens();
-//         window.location.href = Routes.AUTH;
-//         return Promise.reject(error);
-//       }
+      if (!refreshToken) {
+        removeTokens();
+        return Promise.reject(error);
+      }
 
-//       try {
-//         const { data } = await axios.post<authTypeReturn>(
-//           `https://api.vtrende.kz/auth/refresh-token`,
-//           {
-//             refresh_token: refreshToken,
-//           }
-//         );
+      try {
+        const { data } = await axios.post<authTypeReturn>(
+          `https://api.vtrende.kz/auth/refresh-token/`,
+          {
+            refresh_token: refreshToken,
+          }
+        );
 
-//         setCookie(CookiesInfo.ACCESS_TOKEN, data.data.access_token, {
-//           expires: new Date(data.data.access_expiration),
-//         });
+        setCookie(CookiesInfo.ACCESS_TOKEN, data.data.access_token, {
+          expires: new Date(data.data.access_expiration),
+        });
 
-//         setCookie(CookiesInfo.REFRESH_TOKEN, data.data.refresh_token, {
-//           expires: new Date(data.data.refresh_expiration),
-//         });
+        setCookie(CookiesInfo.REFRESH_TOKEN, data.data.refresh_token, {
+          expires: new Date(data.data.refresh_expiration),
+        });
 
-//         originalRequest.headers.Authorization = `Bearer ${data.data.access_token}`;
+        originalRequest.headers.Authorization = `Bearer ${data.data.access_token}`;
 
-//         return axios(originalRequest);
-//       } catch (refreshError) {
-//         removeTokens();
-//         window.location.href = Routes.AUTH;
+        return axios(originalRequest);
+      } catch (refreshError) {
+        removeTokens();
+        return Promise.reject(refreshError);
+      }
+    }
 
-//         return Promise.reject(refreshError);
-//       }
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );
+    return Promise.reject(error);
+  }
+);
 
 // api.interceptors.request.use(
 //   (config) => {

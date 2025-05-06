@@ -1,3 +1,4 @@
+import { useGetMe } from "@/src/entities/Client/modal/hooks/getMe";
 import api from "@/src/shared/api/api";
 import { setAuthTokens } from "@/src/shared/hooks/setAuthTokens";
 import { useMutation } from "@tanstack/react-query";
@@ -19,6 +20,8 @@ export const useSignIn = ({
   openAnotherModal: () => void;
   setIsNotVerified: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const { refetch } = useGetMe();
+
   const {
     register,
     handleSubmit,
@@ -53,8 +56,9 @@ export const useSignIn = ({
       toast.success("Успешно!");
       if (decodedToken.verified === false) {
         openAnotherModal();
-        setIsNotVerified(true)
+        setIsNotVerified(true);
       } else {
+        refetch()
         handleClose();
       }
     },

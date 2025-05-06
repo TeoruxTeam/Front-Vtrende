@@ -18,6 +18,7 @@ export const SignIn = ({
   openModalFn: (type: IAuthClientModalType) => void;
   setIsNotVerified: Dispatch<SetStateAction<boolean>>;
 }) => {
+  
   const { handleSubmit, register, onSubmit, errors, isValid } = useSignIn({
     handleClose,
     openAnotherModal: () => openModalFn("confirm email"),

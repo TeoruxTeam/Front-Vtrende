@@ -4,3 +4,5 @@ export type {
   authValidate,
   signUpValidate,
 } from "./AuthModal/validate/authValidate";
+
+export { AuthModal } from "./AuthModal/ui/AuthModal";

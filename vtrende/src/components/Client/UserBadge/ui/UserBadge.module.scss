@@ -1,17 +1,28 @@
-@import '@vars';
+@import "@vars";
 
 .profile {
   display: flex;
   align-items: center;
   gap: 15px;
 
-  .userAvatar { 
+  .userAvatar {
+    border-radius: 50%;
+    // border: 1px solid $white;
+  }
+
+  .userAvatarInfo {
     border-radius: 50%;
     border: 1px solid $white;
   }
 
-  .userName { 
+  .userName {
     color: $white;
     font-size: 16px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+    display: block;
   }
 }

@@ -1,6 +1,6 @@
+"use client"
 import { Modal } from "@/src/shared/ui/Modal/Modal";
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { SignIn } from "../../AuthModalInfo/SignIn/ui/SignIn";
 import { SignUp } from "../../AuthModalInfo/SignUp/ui/SignUp";
 import { ConfirmEmail } from "../../EmailActionsModal/ConfirmEmail/ui/ConfirmEmail";
@@ -18,8 +18,8 @@ interface IAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialModalType?: IAuthClientModalType;
-  isNotVerified: boolean;
-  setIsNotVerified: Dispatch<SetStateAction<boolean>>;
+  isNotVerified?: boolean;
+  setIsNotVerified?: Dispatch<SetStateAction<boolean>>;
 }
 
 export const AuthModal: FC<IAuthModalProps> = ({
@@ -44,7 +44,7 @@ export const AuthModal: FC<IAuthModalProps> = ({
 
   const handleClose = () => {
     if (isNotVerified && currentModalType === "confirm email") {
-      toast.error("Необходимо подтвердить email перед закрытием!");
+      // toast.error("Необходимо подтвердить email перед закрытием!");
       return;
     }
     onClose();
@@ -64,13 +64,19 @@ export const AuthModal: FC<IAuthModalProps> = ({
             textActionFn={() => openModalFn("sign up")}
             handleClose={handleClose}
             openModalFn={openModalFn}
-            setIsNotVerified={setIsNotVerified}
+            setIsNotVerified={setIsNotVerified!}
           />
         );
       case "sign up":
-        return <SignUp actionTextFn={openModalFn} handleClose={handleClose} />;
+        return (
+          <SignUp
+            actionTextFn={openModalFn}
+            setIsNotVerified={setIsNotVerified!}
+            handleClose={handleClose}
+          />
+        );
       case "confirm email":
-        return <ConfirmEmail />;
+        return <ConfirmEmail closeModal={handleClose} />;
       case "password recovery email":
         return (
           <RecoveryEmail onFooterButtonClick={() => openModalFn("sign in")} />
@@ -91,7 +97,7 @@ export const AuthModal: FC<IAuthModalProps> = ({
     <Modal
       isOpen={isOpen}
       onClose={handleClose}
-      disableClose={isNotVerified && currentModalType === "confirm email"}
+      disableClose={currentModalType === "confirm email"}
     >
       {renderModalContent()}
     </Modal>

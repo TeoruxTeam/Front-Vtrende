@@ -1,5 +1,6 @@
 import { Button, IButtonTheme } from "@/src/shared/ui/Button/Button";
 import InputWithLabel from "@/src/shared/ui/InputWithLabel/ui/InputWithLabel";
+import { Dispatch, SetStateAction } from "react";
 import { IAuthClientModalType } from "../../../AuthModal/ui/AuthModal";
 import { authValidate } from "../../../AuthModal/validate/authValidate";
 import { AuthModalInfo } from "../../ui/AuthModalInfo";
@@ -8,10 +9,11 @@ import styles from "./SignUp.module.scss";
 
 export const SignUp = ({
   actionTextFn,
-  handleClose,
+  handleClose
 }: {
   actionTextFn: (type: IAuthClientModalType) => void;
-  handleClose: () => void;
+  setIsNotVerified: Dispatch<SetStateAction<boolean>>;
+  handleClose: () => void
 }) => {
   const {
     errors,
@@ -21,7 +23,7 @@ export const SignUp = ({
     passwordStrength,
     register,
     password,
-  } = useSignUp({ handleClose, openConfirmationModal: actionTextFn });
+  } = useSignUp({ handleClose });
 
   return (
     <AuthModalInfo

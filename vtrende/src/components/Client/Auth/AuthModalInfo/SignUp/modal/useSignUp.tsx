@@ -1,23 +1,17 @@
+import { useGetMe } from "@/src/entities/Client/modal/hooks/getMe";
 import api from "@/src/shared/api/api";
 import { setAuthTokens } from "@/src/shared/hooks/setAuthTokens";
 import { IError } from "@/src/shared/types/cookiesInfo";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { IAuthClientModalType } from "../../../AuthModal/ui/AuthModal";
 import {
   IAuthResponseData,
   ISignUp,
 } from "../../../AuthModal/validate/authValidate";
 
-export const useSignUp = ({
-  // handleClose,
-  openConfirmationModal,
-}: {
-  handleClose: () => void;
-  openConfirmationModal: (type: IAuthClientModalType) => void;
-}) => {
-  // const { refetch: refetchUserInfo } = useGetMe();
+export const useSignUp = ({ handleClose }: { handleClose: () => void }) => {
+  const { refetch } = useGetMe();
 
   const {
     register,
@@ -68,10 +62,10 @@ export const useSignUp = ({
         refreshExpiration: data.data.refresh_expiration,
         refreshToken: data.data.refresh_token,
       });
-      toast.success("Успешно! На вашу почту отправлен код");
-      openConfirmationModal("confirm email");
-      // handleClose();
-      // refetchUserInfo();
+      // openConfirmationModal("confirm email");
+      // setIsNotVerified(true);
+      handleClose();
+      refetch();
     },
     onError: (error: IError) => {
       if (error?.response?.data.error === "error.auth.user.exists") {

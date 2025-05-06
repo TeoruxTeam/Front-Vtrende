@@ -1,9 +1,7 @@
-import React from 'react'
+import { MainPage } from "@/src/views";
 
 const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+  return <MainPage />;
+};
 
-export default page
+export default page;

@@ -1,0 +1,30 @@
+.categoryBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: linear-gradient(116.45deg, #0047ab 33.39%, #ffffff 89.1%);
+  border-radius: 40px;
+  margin-top: 25px;
+  height: 380px;
+
+  .text { 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--white);
+    width: 300px;
+
+    .title {
+      font-size: 36px;
+      font-weight: 600;
+    }
+
+    .description { 
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 120%;
+    }
+  }
+
+}
