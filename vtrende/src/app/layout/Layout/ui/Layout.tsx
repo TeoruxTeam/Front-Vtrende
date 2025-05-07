@@ -1,10 +1,10 @@
 "use client";
 import { AuthModal } from "@/src/components/Client/Auth";
 import { IAuthClientModalType } from "@/src/components/Client/Auth/AuthModal/ui/AuthModal";
+import { Header } from "@/src/entities/Client";
+import { Footer } from "@/src/entities/Client/Footer/ui/Footer";
+import { useGetMe } from "@/src/entities/Client/modal/hooks/getMe";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
-import { Footer } from "../../Footer/ui/Footer";
-import { Header } from "../../Header/ui/Header";
-import { useGetMe } from "../../modal/hooks/getMe";
 import styles from "./Layout.module.scss";
 
 export const Layout: FC<PropsWithChildren> = ({ children }) => {
@@ -26,11 +26,12 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (data) {
-      if (data.notVerified) {
-        setInitialModalType("confirm email");
-        setOpenModal(true);
-        setIsNotVerified(true);
-      } else if (data.data && data.data.verified === false) {
+      // if (data.notVerified) {
+      //   setInitialModalType("confirm email");
+      //   setOpenModal(true);
+      //   setIsNotVerified(true);
+      // } else
+      if ((data.data && data.data.verified === false) || data.notVerified) {
         setInitialModalType("confirm email");
         setOpenModal(true);
         setIsNotVerified(true);

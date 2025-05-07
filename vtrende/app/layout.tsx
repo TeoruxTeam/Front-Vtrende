@@ -1,5 +1,6 @@
 "use client";
-import { Layout } from "@/src/entities/Client";
+
+import { Layout } from "@/src/app/layout/Layout/ui/Layout";
 import "@styles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Roboto } from "next/font/google";

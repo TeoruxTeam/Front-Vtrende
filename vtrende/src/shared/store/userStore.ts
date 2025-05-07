@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-// Интерфейс для состояния пользователя
 interface UserState {
   id: number;
   email: string;
@@ -13,7 +12,7 @@ interface UserState {
   iin_bin: string;
   avatar: string;
 
-  // Методы для обновления каждого поля
+  
   setId: (id: number) => void;
   setEmail: (email: string) => void;
   setName: (name: string) => void;
@@ -23,13 +22,13 @@ interface UserState {
   setCreatedAt: (created_at: string) => void;
   setIinBin: (iin_bin: string) => void;
   setAvatar: (avatar: string) => void;
+  
+  setUserData: (data: Partial<UserState>) => void;
 }
 
-// Создаём стор с персистентностью
 export const useUserStore = create(
   persist<UserState>(
     (set) => ({
-      // Начальные значения
       id: 0,
       email: "",
       name: "",
@@ -40,7 +39,7 @@ export const useUserStore = create(
       iin_bin: "",
       avatar: "",
 
-      // Методы для обновления каждого поля
+      
       setId: (id) => set({ id }),
       setEmail: (email) => set({ email }),
       setName: (name) => set({ name }),
@@ -50,6 +49,12 @@ export const useUserStore = create(
       setCreatedAt: (created_at) => set({ created_at }),
       setIinBin: (iin_bin) => set({ iin_bin }),
       setAvatar: (avatar) => set({ avatar }),
+      
+      
+      setUserData: (data) => set((state) => ({
+        ...state,
+        ...data,
+      })),
     }),
     {
       name: 'user-storage',
