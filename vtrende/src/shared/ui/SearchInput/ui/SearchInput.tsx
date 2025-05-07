@@ -8,14 +8,16 @@ interface ISearchInputProps extends InputHTMLAttributes<HTMLInputElement> {
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   placeholder?: string;
-  inputClassname?: string
+  inputClassname?: string;
+  onButtonClick: () => void;
 }
 
 export const SearchInput: FC<ISearchInputProps> = ({
   value,
   onChange,
   placeholder,
-  inputClassname = ''
+  inputClassname = "",
+  onButtonClick,
 }) => {
   return (
     <div className={styles.searchInput}>
@@ -25,10 +27,12 @@ export const SearchInput: FC<ISearchInputProps> = ({
         onChange={onChange}
         placeholder={placeholder}
         classNameInput={{
-          inputClassName: inputClassname
+          inputClassName: inputClassname,
         }}
       />
-      <Image src={searchWithBgIcon} alt="search" width={40} height={40} />
+      <button onClick={onButtonClick}>
+        <Image src={searchWithBgIcon} alt="search" width={40} height={40} />
+      </button>
     </div>
   );
 };

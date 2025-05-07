@@ -1,0 +1,11 @@
+.changeCity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .city { 
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 400;
+  }
+}

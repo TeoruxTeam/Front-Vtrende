@@ -1,9 +1,10 @@
 "use client";
 import { AuthModal } from "@/src/components/Client/Auth";
 import { IAuthClientModalType } from "@/src/components/Client/Auth/AuthModal/ui/AuthModal";
-import { Header } from "@/src/entities/Client";
-import { Footer } from "@/src/entities/Client/Footer/ui/Footer";
+import { Footer } from "@/src/components/Client/MainPage/Footer/ui/Footer";
+import { Header } from "@/src/components/Client/MainPage/Header/ui/Header";
 import { useGetMe } from "@/src/entities/Client/modal/hooks/getMe";
+import { useSearchParams } from "next/navigation";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
 import styles from "./Layout.module.scss";
 
@@ -12,7 +13,8 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
   const [isNotVerified, setIsNotVerified] = useState(false);
   const [initialModalType, setInitialModalType] =
     useState<IAuthClientModalType>("sign up");
-
+  const searchParams = useSearchParams();
+  const resetCode = searchParams.get("reset_code");
   const { data } = useGetMe();
 
   const handleOpenModal = (type?: IAuthClientModalType) => {
@@ -25,12 +27,13 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
   };
 
   useEffect(() => {
+    if (resetCode) {
+      handleOpenModal("password recovery passwords");
+    }
+  }, [resetCode]);
+
+  useEffect(() => {
     if (data) {
-      // if (data.notVerified) {
-      //   setInitialModalType("confirm email");
-      //   setOpenModal(true);
-      //   setIsNotVerified(true);
-      // } else
       if ((data.data && data.data.verified === false) || data.notVerified) {
         setInitialModalType("confirm email");
         setOpenModal(true);

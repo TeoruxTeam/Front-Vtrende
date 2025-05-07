@@ -1,0 +1,30 @@
+.catalogBlock {
+  display: flex;
+  gap: 25px;
+
+  .catalogBlockInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .categoryBlockInfo { 
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .categoryHeader {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        cursor: pointer;
+        width: fit-content;
+        
+        .categoryName {
+          color: var(--black);
+          font-size: 25px;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}

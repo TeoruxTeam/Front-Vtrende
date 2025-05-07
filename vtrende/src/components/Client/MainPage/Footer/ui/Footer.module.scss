@@ -1,0 +1,30 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 35px 70px;
+  height: 130px;
+  background-color: var(--white);
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+
+  .logoBlockStyles {
+    color: var(--black) !important;
+  }
+
+  .text { 
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    color: var(--light-gray);
+    font-size: 10px;
+    font-weight: 400;
+  }
+
+  .links { 
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}
