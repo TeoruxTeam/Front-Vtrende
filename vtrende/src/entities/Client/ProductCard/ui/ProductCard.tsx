@@ -1,20 +1,19 @@
 "use client";
 import cameraIcon from "@/public/CardBlock/camera.svg";
-import starIcon from "@/public/star.svg";
-import { ConvertImage } from "@/src/shared/hooks/convertImage";
+import { ConvertImage } from "@/src/shared/hooks";
 import { formatNumberThousands } from "@/src/shared/model";
 import classNames from "classnames";
 import Image from "next/image";
 import { FC } from "react";
-import { IItem } from "../../modal/types/productTypes";
+import { IProduct, LikeIcon } from "../../modal";
+import { RatingBlock } from "../../RatingBlock/ui/RatingBlock";
 import { useAddedToFavorites } from "../model/hooks/addedToFavorites";
-import LikeIcon from "../model/icons/likeIcon";
 import styles from "./ProductCard.module.scss";
 
 interface IProductCardProps {
-  items: IItem[];
-  addedToFavorite?: (id: IItem["id"], isFavorite: boolean) => void;
-  onCardClick?: (itemId: IItem["id"]) => void;
+  items: IProduct[];
+  addedToFavorite?: (id: IProduct["id"], isFavorite: boolean) => void;
+  onCardClick?: (itemId: IProduct["id"]) => void;
 }
 
 export const ProductCard: FC<IProductCardProps> = ({
@@ -48,8 +47,12 @@ export const ProductCard: FC<IProductCardProps> = ({
                 styles.likeStyles,
                 favoriteItems.includes(item.id) && styles.activeLikeStyles
               )}
-              onClick={() =>
-                handleToggleFavorites(item.id, favoriteItems.includes(item.id))
+              onClick={(e) =>
+                handleToggleFavorites(
+                  e,
+                  item.id,
+                  favoriteItems.includes(item.id)
+                )
               }
               disabled={addLoading || removeLoading}
             >
@@ -94,10 +97,7 @@ export const ProductCard: FC<IProductCardProps> = ({
                 />
                 <p className={styles.shopName}>{item.shop_name}</p>
               </div>
-              <div className={styles.shopRating}>
-                <Image src={starIcon} alt="star" width={10} height={10} />
-                <p className={styles.rating}>{item.shop_rating}</p>
-              </div>
+              <RatingBlock rating={item.shop_rating} />
             </div>
           </div>
         </div>

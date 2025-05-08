@@ -2,7 +2,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { IItem } from "../../../modal/types/productTypes";
+import { IProduct } from "../../../modal";
 import { useAddedToFavoritesApi } from "../mutate/addedToFavorites";
 import { useRemoveFromFavoritesApi } from "../mutate/removeFromFavorites";
 
@@ -10,7 +10,7 @@ export const useAddedToFavorites = ({
   items,
   addedToFavorite,
 }: {
-  items: IItem[];
+  items: IProduct[];
   addedToFavorite?: (id: number, isFavorite: boolean) => void;
 }) => {
   const { addedToFavorites, isLoading: addLoading } = useAddedToFavoritesApi();
@@ -36,7 +36,13 @@ export const useAddedToFavorites = ({
     }
   }, [addedToFavorites.isSuccess, addedToFavorites.data]);
 
-  const handleToggleFavorites = (id: number, isFavorite: boolean) => {
+  const handleToggleFavorites = (
+    e: React.MouseEvent,
+    id: number,
+    isFavorite: boolean
+  ) => {
+    e.stopPropagation();
+
     if (addLoading || removeLoading) return;
 
     if (isFavorite) {

@@ -1,13 +1,13 @@
 "use client";
 import blueArrow from "@/public/blueArrow.svg";
 import Image from "next/image";
-import { IItem, IItemData } from "../../modal/types/productTypes";
+import { IProduct, IProductData } from "../../modal/types/productTypes";
 import { ProductCard } from "../../ProductCard/ui/ProductCard";
 import styles from "./CatalogBlock.module.scss";
 
-interface CatalogBlockProps extends IItemData {
+interface CatalogBlockProps extends IProductData {
   showArrow?: boolean;
-  onCardClick: (itemId: IItem["id"]) => void;
+  onCardClick?: (itemId: IProduct["id"]) => void;
 }
 
 export const CatalogBlock = ({
@@ -18,7 +18,7 @@ export const CatalogBlock = ({
   return (
     <div className={styles.catalogBlock}>
       <div className={styles.catalogBlockInfo}>
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <div className={styles.categoryBlockInfo} key={category.id}>
             <div className={styles.categoryHeader}>
               <button className={styles.categoryName}>{category.name}</button>

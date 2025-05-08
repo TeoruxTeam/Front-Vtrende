@@ -1,15 +1,15 @@
 "use client";
 import { CatalogBlock } from "@/src/entities/Client";
+import { IProduct } from "@/src/entities/Client/modal";
+import mockData from "@/src/entities/Client/modal/hooks/getCategoryItems";
 import { Routes } from "@/src/shared/routes/routes";
 import { useRouter } from "next/navigation";
-import mockData from "../modal/query/getCatalogBlockInfo";
 import styles from "./CatalogBlockInfo.module.scss";
-import { IItem } from "@/src/entities/Client/modal/types/productTypes";
 
 export const CatalogBlockInfo = () => {
   const navigate = useRouter();
 
-  const handleCardClick = (itemId: IItem['id']) => {
+  const handleCardClick = (itemId: IProduct["id"]) => {
     navigate.push(`${Routes.PRODUCT}/${itemId}`);
   };
 

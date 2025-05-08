@@ -1,0 +1,56 @@
+.cover {
+  background-color: green;
+  height: 480px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  position: relative;
+
+  .shopInfo {
+    background-color: #252525cc;
+    padding: 28px;
+    position: absolute;
+    bottom: 0;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    width: 100%;
+
+    .badge {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        .name {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          .title {
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--white);
+          }
+
+          .description {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--white);
+            max-width: 400px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.2;
+            white-space: nowrap;
+          }
+
+          .rating {
+            color: var(--white) !important;
+          }
+        }
+      }
+    }
+  }
+}

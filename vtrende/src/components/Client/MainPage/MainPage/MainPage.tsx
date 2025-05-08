@@ -10,7 +10,7 @@ export const MainPage = () => {
         flexDirection: "column",
         gap: "25px",
         width: "100%",
-        margin: '25px 0'
+        margin: '0 0 25px'
       }}
     >
       <CategoryBlock />

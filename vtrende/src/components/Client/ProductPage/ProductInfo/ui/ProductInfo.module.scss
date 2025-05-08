@@ -1,0 +1,128 @@
+@import "@vars";
+
+.productInfo {
+  display: flex;
+  justify-content: start;
+  gap: 70px;
+  padding: 35px 25px;
+  background-color: var(--white);
+  border-radius: 8px;
+
+  .previewPhotos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 530px;
+    overflow-y: auto;
+    scrollbar-width: none;
+
+    .photoButtonStyles {
+      border-radius: 20px;
+      height: 170px;
+
+      .photoStyles {
+        border-radius: 20px;
+        border: 1px solid var(--black);
+        background-color: #f0eeed;
+      }
+    }
+  }
+
+  .mainInfo {
+    display: flex;
+    gap: 40px;
+    align-items: start;
+
+    .bigProductImage {
+      border-radius: 20px;
+    }
+
+    .mainInfoData {
+      max-width: 470px;
+      min-width: 470px;
+      
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        flex-direction: column;
+        gap: 20px;
+
+        .headerActions { 
+          display: flex;
+          align-items: center;
+          gap: 15px;
+
+          .reportBlock { 
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--black);
+          }
+
+          .action { 
+            display: flex;
+            align-items: center;
+            gap: 5px;
+          }
+        }
+
+        .priceBlock {
+          display: flex;
+          gap: 10px;
+
+          .price {
+            color: var(--blue);
+            font-size: 36px;
+            font-weight: 700;
+          }
+
+          .oldPrice {
+            font-size: 23px;
+            font-weight: 700;
+            text-decoration: line-through;
+            color: var(--light-gray);
+          }
+        }
+      }
+
+      .infoBlock {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        .name {
+          font-size: 36px;
+          font-weight: 700;
+          color: var(--black);
+          @include line-clamp;
+        }
+
+        .addedToCard {
+          padding: 16px 54px;
+          width: 300px;
+        }
+
+        .description {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          color: var(--black);
+          line-height: 1.2;
+          
+          .title {
+            font-size: 23px;
+            font-weight: 600;
+          }
+
+          .description {
+            font-size: 14px;
+            font-weight: 400;
+            max-height: 150px;
+            overflow: auto;
+            scrollbar-width: none;
+          }
+        }
+      }
+    }
+  }
+}

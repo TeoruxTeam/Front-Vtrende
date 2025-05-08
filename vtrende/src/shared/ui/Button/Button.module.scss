@@ -37,6 +37,11 @@
   }
 }
 
+.cyan { 
+  background-color: var(--gray);
+  color: $black;
+}
+
 .white { 
   background-color: var(--white);
   border-radius: 8px;

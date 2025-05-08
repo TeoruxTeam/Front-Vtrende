@@ -1,5 +1,6 @@
 export enum Routes {
-  PRODUCT = '/product'
+  PRODUCT = '/product',
+  SHOP = '/shopInfo'
 }
 
 // export const publicRoutes = [Routes.AUTH, Routes.AUTH_2FA];

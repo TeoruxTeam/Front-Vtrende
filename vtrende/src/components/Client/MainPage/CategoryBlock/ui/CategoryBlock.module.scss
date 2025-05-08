@@ -1,3 +1,5 @@
+@import '@vars';
+
 .categoryBlock {
   display: flex;
   justify-content: center;
@@ -5,7 +7,7 @@
   width: 100%;
   background: linear-gradient(116.45deg, #0047ab 33.39%, #ffffff 89.1%);
   border-radius: 40px;
-  // margin-top: 25px;
+  @include defaultMarginTop;
   height: 380px;
   position: relative;
 

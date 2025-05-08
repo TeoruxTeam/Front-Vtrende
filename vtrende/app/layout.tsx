@@ -1,5 +1,4 @@
 "use client";
-
 import { Layout } from "@/src/app/layout/Layout/ui/Layout";
 import "@styles";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -18,7 +17,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
+
   return (
     <html lang="en" className={roboto.className}>
       <body>

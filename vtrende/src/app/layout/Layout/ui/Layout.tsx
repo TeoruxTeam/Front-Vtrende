@@ -4,7 +4,9 @@ import { IAuthClientModalType } from "@/src/components/Client/Auth/AuthModal/ui/
 import { Footer } from "@/src/components/Client/MainPage/Footer/ui/Footer";
 import { Header } from "@/src/components/Client/MainPage/Header/ui/Header";
 import { useGetMe } from "@/src/entities/Client/modal/hooks/getMe";
-import { useSearchParams } from "next/navigation";
+import { Routes } from "@/src/shared/routes/routes";
+import classNames from "classnames";
+import { usePathname, useSearchParams } from "next/navigation";
 import { FC, PropsWithChildren, useEffect, useState } from "react";
 import styles from "./Layout.module.scss";
 
@@ -16,6 +18,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
   const searchParams = useSearchParams();
   const resetCode = searchParams.get("reset_code");
   const { data } = useGetMe();
+  const pathname = usePathname();
 
   const handleOpenModal = (type?: IAuthClientModalType) => {
     setOpenModal(true);
@@ -46,9 +49,18 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
   }, [data]);
 
   return (
-    <div>
-      <Header onOpenModal={handleOpenModal} />
-      <div className={styles.layoutChildrenStyles}>{children}</div>
+    <div className={styles.layout}>
+      <div>
+        <Header onOpenModal={handleOpenModal} />
+        <div
+          className={classNames(
+            styles.layoutChildrenStyles,
+            pathname.includes(`${Routes.PRODUCT}`) && styles.moreInfoProduct
+          )}
+        >
+          {children}
+        </div>
+      </div>
       <Footer />
       <AuthModal
         isOpen={openModal}

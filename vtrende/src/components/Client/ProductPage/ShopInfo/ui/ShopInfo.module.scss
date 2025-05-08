@@ -1,0 +1,56 @@
+.shop_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--white);
+  padding: 12px 24px;
+  border-radius: 8px;
+
+  .shop_main_info_block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+
+    .mainInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 9px;
+
+      .nameAndDescription {
+        display: flex;
+        flex-direction: column;
+        gap: 9px;
+        max-width: 225px;
+        min-width: 225px;
+
+        .shopInfoName,
+        .description {
+          color: var(--light-gray);
+          font-size: 23px;
+          font-weight: 600;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          line-height: 1.2;
+        }
+
+        .description {
+          position: relative;
+          color: var(--light-gray);
+          font-weight: 600;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .writeToSeller {
+      padding: 10px 20px !important;
+    }
+  }
+}
+
+.ratingStyles {
+  font-size: 14px !important;
+}

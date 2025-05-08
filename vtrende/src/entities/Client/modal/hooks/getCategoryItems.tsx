@@ -1,8 +1,9 @@
 import shoppingCartIcon from "@/public/categoryBlock/shoppingCart.svg";
-import { IItemData } from "@/src/entities/Client/modal/types/productTypes";
+import { IProductData } from "@/src/entities/Client/modal";
+import api, { API_BASE_URL } from "@/src/shared/api/api";
 import { useQuery } from "@tanstack/react-query";
 
-export const mockData: IItemData = {
+export const mockData: IProductData = {
   categories: [
     {
       id: 1,
@@ -25,9 +26,7 @@ export const mockData: IItemData = {
           is_favorite: true,
           shop_name: "TechShop",
           shop_rating: 4.8,
-          views: 1200,
-          shop_avatar: '',
-          purchases: 350,
+          shop_avatar: "",
         },
         {
           id: 2,
@@ -42,9 +41,7 @@ export const mockData: IItemData = {
           is_favorite: false,
           shop_name: "TechShop",
           shop_rating: 4.8,
-          shop_avatar: '',
-          views: 800,
-          purchases: 120,
+          shop_avatar: "",
         },
       ],
     },
@@ -68,9 +65,7 @@ export const mockData: IItemData = {
           is_favorite: false,
           shop_name: "FashionStore",
           shop_rating: 4.5,
-          shop_avatar: '',
-          views: 500,
-          purchases: 200,
+          shop_avatar: "",
         },
       ],
     },
@@ -84,17 +79,23 @@ export const mockData: IItemData = {
 
 export default mockData;
 
-export const useGetCatalogBlockInfo = () => {
-  const catalogInfo = useQuery({
-    queryKey: ["catalog_info"],
+export const useGetCategoryItemsQuery = () => {
+  return useQuery({
+    queryKey: ["get_category_items"],
     queryFn: async () => {
-      // const response = await api.get("/shop/main/");
-      // return response.data;
-      return mockData;
+      const response = await api.get<IProductData>("/shop/main/");
+      return response.data;
     },
   });
-
-  return {
-    catalogInfo,
-  };
+  
 };
+
+export async function getCategoryItemsFetch() {
+  const response = await fetch(`${API_BASE_URL}/shop/main/`, {
+    cache: "no-store",
+  });
+
+  const data = await response.json();
+  // return data as IProductData;
+  return mockData ;
+}

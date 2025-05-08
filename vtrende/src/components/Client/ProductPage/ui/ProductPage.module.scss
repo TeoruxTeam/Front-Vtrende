@@ -1,0 +1,9 @@
+@import "@vars";
+
+.productPage {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  @include defaultMarginTop;
+}

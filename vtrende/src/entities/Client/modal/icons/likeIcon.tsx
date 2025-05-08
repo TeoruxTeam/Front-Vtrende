@@ -5,22 +5,28 @@ interface LikeIconProps {
   height?: string | number;
   fill?: string;
   className?: string;
+  stroke?: string;
 }
 
-const LikeIcon: React.FC<LikeIconProps> = ({
+export const LikeIcon: React.FC<LikeIconProps> = ({
   width = 35,
   height = 35,
   fill = "transparent",
+  stroke = "#0047AB",
   // className,
 }) => (
-  <svg width={width} height={height} fill={fill} xmlns="http://www.w3.org/2000/svg">
+  <svg
+    viewBox="0 0 14 14"
+    width={width}
+    height={height}
+    fill={fill}
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       d="M11.361 3.217a2.75 2.75 0 00-3.89 0l-.53.53-.53-.53a2.75 2.75 0 10-3.89 3.89l.53.53 3.89 3.89 3.89-3.89.53-.53a2.75 2.75 0 000-3.89v0z"
-      stroke="#0047AB"
+      stroke={stroke}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
   </svg>
 );
-
-export default LikeIcon;

@@ -1,0 +1,60 @@
+.additionalShopInformation {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--white);
+  border-radius: 8px;
+  height: 270px;
+
+  .additional {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 25px 40px;
+    width: 100%;
+
+    .description {
+      max-height: 70px;
+      overflow: auto;
+      scrollbar-width: none;
+      line-height: 1.2;
+    }
+
+    .addressInfo {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .addressBlock {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .address {
+          display: flex;
+          gap: 5px;
+
+          .addressMainInfo {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            color: var(--light-gray);
+            font-size: 16px;
+            font-weight: 400;
+          }
+        }
+
+        .addressButton {
+          padding: 10px 30px;
+          min-width: 200px;
+        }
+      }
+    }
+  }
+
+  .schedule {
+    background-color: var(--blue);
+    min-width: 170px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}

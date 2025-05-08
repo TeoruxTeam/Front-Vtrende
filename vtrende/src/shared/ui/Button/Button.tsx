@@ -3,15 +3,16 @@ import { ButtonHTMLAttributes, FC, PropsWithChildren } from "react";
 import styles from "./Button.module.scss";
 
 export enum IButtonTheme {
-  BLUE = 'blue',
-  GRAY = 'gray',
-  WHITE = 'white'
+  BLUE = "blue",
+  GRAY = "gray",
+  WHITE = "white",
+  CYAN = "cyan",
 }
 
 export enum IButtonSize {
   SMALL = "small",
   MEDIUM = "medium",
-  ROUND = 'round'
+  ROUND = "round",
 }
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {

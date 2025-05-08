@@ -3,9 +3,9 @@ import styles from "./Loader.module.scss";
 
 export const Loading: FC = () => {
   return (
-    // <div className={styles.loaderContainer}>
-    //   <div className={styles.spinner}></div>
-    // </div>
-    <div className={styles.loader} />
+    <div className={styles.loaderContainer}>
+      <div className={styles.spinner}></div>
+    </div>
+    // <div className={styles.loader} />
   );
 };
