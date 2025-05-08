@@ -1,4 +1,9 @@
-@import '@vars';
+@import "@vars";
+
+
+.categories {
+  position: relative;
+}
 
 .category {
   display: flex;
@@ -8,9 +13,45 @@
   background-color: $blue;
   border-radius: 8px;
   cursor: pointer;
-  
-  .text { 
+
+  .text {
     font-size: 16px;
     color: $white;
   }
+}
+
+.select {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  width: 730px;
+  height: 545px;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: var(--white);
+  box-shadow: 0px 16px 24px 0px #0000000f;
+  position: absolute;
+  top: 60px;
+  left: -334px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: $default-transition;
+
+  .categoryName {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--black);
+    padding-bottom: 5px;
+    border-bottom: 1px solid #f5f6fa;
+    cursor: pointer;
+    text-align: start;
+  }
+}
+
+.activeSelect {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  transition: $default-transition;
 }

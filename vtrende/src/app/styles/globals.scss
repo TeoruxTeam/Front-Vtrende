@@ -2,13 +2,13 @@
 
 :root {
   --blue: #0047ab;
-  --white:#fff;
+  --white: #fff;
   --light-gray: #575757;
-  --light-gray-1: #DEDEE9;
+  --light-gray-1: #dedee9;
   --dark-gray: #404040;
   --gray: #dfe9f2;
   --black: #252525;
-  --green: #34C759CC;
+  --green: #34c759cc;
 
   scrollbar-width: none;
 }
@@ -139,4 +139,8 @@ img {
 * {
   scrollbar-width: thin;
   scrollbar-color: #8a8a8a #2c2c2c;
+}
+
+[data-select-initial="true"] {
+  display: none !important;
 }
