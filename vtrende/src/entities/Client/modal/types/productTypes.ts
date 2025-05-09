@@ -1,6 +1,6 @@
 interface Photo {
   id: number;
-  url: string;
+  photo_url: string;
 }
 
 export interface IProduct {

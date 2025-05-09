@@ -3,13 +3,13 @@ import { FC } from "react";
 import { AdditionalShopInformation } from "../../AdditionalShopInformation/ui/AdditionalShopInformation";
 import { CatalogBlockShopPage } from "../../CatalogBlockShopPage/ui/CatalogBlockShopPage";
 import { ShopMainInfo } from "../../ShopMainInfo/ui/ShopMainInfo";
-import styles from "./ShopInfo.module.scss";
+import styles from "./ShopBlock.module.scss";
 
-interface IShopInfoProps {
+interface IShopBlockProps {
   shopInfo: IShopInfo;
 }
 
-export const ShopInfo: FC<IShopInfoProps> = ({ shopInfo }) => {
+export const ShopBlock: FC<IShopBlockProps> = ({ shopInfo }) => {
   return (
     <div className={styles.shopInfo}>
       <ShopMainInfo shopInfo={shopInfo} />

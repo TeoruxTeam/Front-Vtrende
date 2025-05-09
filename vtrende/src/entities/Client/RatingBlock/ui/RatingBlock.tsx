@@ -16,9 +16,15 @@ export const RatingBlock = ({
   height?: number;
 }) => {
   return (
-    <div className={styles.shopRating}>
-      <Image src={starIcon} alt="star" width={width} height={height} />
-      <p className={classNames(styles.rating, className)}>{rating}</p>
-    </div>
+    <>
+      {rating ? (
+        <div className={styles.shopRating}>
+          <Image src={starIcon} alt="star" width={width} height={height} />
+          <p className={classNames(styles.rating, className)}>{rating}</p>
+        </div>
+      ) : (
+        <p className={classNames(styles.rating, className)}>Отзывов нет</p>
+      )}
+    </>
   );
 };

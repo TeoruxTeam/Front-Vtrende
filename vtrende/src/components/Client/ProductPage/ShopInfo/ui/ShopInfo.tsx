@@ -25,6 +25,7 @@ export const ShopInfo: FC<IShopInfoProps> = ({ shopInfo }) => {
             alt={shopInfo.name}
             height={85}
             width={85}
+            className={styles.avatarStyles}
           />
         </button>
         <div className={styles.mainInfo}>

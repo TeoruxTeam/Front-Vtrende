@@ -1,11 +1,11 @@
 import { IShopInfo } from "@/src/entities/Client/modal";
 import { FC } from "react";
-import { ShopInfo } from "../ShopInfo/ui/ShopInfo";
+import { ShopBlock } from "../ShopBlock/ui/ShopBlock";
 
 interface IShopPage {
   shopInfo: IShopInfo;
 }
 
 export const ShopPage: FC<IShopPage> = ({ shopInfo }) => {
-  return <ShopInfo shopInfo={shopInfo} />;
+  return <ShopBlock shopInfo={shopInfo} />;
 };

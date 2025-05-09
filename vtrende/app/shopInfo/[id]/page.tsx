@@ -1,22 +1,26 @@
-import { ShopPage } from "@/src/components/Client/ShopPage";
-import { mockShopInfo } from "@/src/entities/Client/ProductCard/model/mutate/ProductInfo/getShopInfo";
+"use client";
 
-const page = ({ params }: { params: { id: string } }) => {
+import Loading from "@/app/loading";
+import { ShopPage } from "@/src/components/Client/ShopPage";
+import { useGetShopInfoQuery } from "@/src/entities/Client";
+
+const Page = ({ params }: { params: { id: string } }) => {
   const shop_id = Number(params.id);
 
-  // const { data: shopInfo, isLoading } = useGetShopInfoQuery({
-  //   shop_id: shop_id,
-  // });
+  const { data: shopInfo, isLoading } = useGetShopInfoQuery({
+    shop_id: shop_id,
+  });
 
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  // if (!shopInfo) {
-  //   return null;
-  // }
+  if (!shopInfo) {
+    return null;
+  }
+  //магазина нет
 
-  return <ShopPage shopInfo={mockShopInfo} />;
+  return <ShopPage shopInfo={shopInfo.data} />;
 };
 
-export default page;
+export default Page;

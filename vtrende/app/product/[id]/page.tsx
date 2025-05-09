@@ -1,33 +1,34 @@
+"use client";
+import Loading from "@/app/loading";
 import { ProductLayout } from "@/src/app/layout/Layout";
 import {
   CatalogBlockProductPage,
   ProductPage,
 } from "@/src/components/Client/ProductPage";
-import { fetchProductInfo, fetchShopInfo } from "@/src/entities/Client";
-import { getCategoryItemsFetch } from "@/src/entities/Client/modal";
-import { Loading } from "@/src/shared/ui";
-import { Suspense } from "react";
+import {
+  useGetProductInfoQuery,
+  useGetShopInfoQuery,
+} from "@/src/entities/Client";
 
-export default async function Page() {
-  // export default async function Page({ params }: { params: { id: string } }) {
-  // const item_id = Number(params.id);
+export default function Page({ params }: { params: { id: string } }) {
+  const item_id = Number(params.id);
 
-  // const productData = await fetchProductInfo(item_id);
-  // const shopData = await fetchShopInfo(productData?.data?.shop_id || null);
-  const productData = await fetchProductInfo();
-  const shopData = await fetchShopInfo();
-  const getCategoryItems = await getCategoryItemsFetch();
+  const { data, isLoading } = useGetProductInfoQuery({ item_id: item_id });
+  const { data: shopInfo, isLoading: shopIsLoading } = useGetShopInfoQuery({
+    shop_id: data?.data.shop_id ?? null,
+  });
 
-  if (!productData || !shopData || !getCategoryItems.categories) {
+  if (isLoading || shopIsLoading) {
     return <Loading />;
   }
 
+  if (!data || !shopInfo) return null;
+  //продукта нет
+
   return (
-    <Suspense fallback={<Loading />}>
-      <ProductLayout>
-        <ProductPage productInfo={productData.data} shopInfo={shopData.data} />
-        <CatalogBlockProductPage />
-      </ProductLayout>
-    </Suspense>
+    <ProductLayout>
+      <ProductPage productInfo={data.data} shopInfo={shopInfo.data} />
+      <CatalogBlockProductPage />
+    </ProductLayout>
   );
 }

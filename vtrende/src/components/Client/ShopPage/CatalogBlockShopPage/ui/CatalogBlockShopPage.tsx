@@ -1,9 +1,11 @@
-import { CatalogBlock } from '@/src/entities/Client'
-import mockData from '@/src/entities/Client/modal/hooks/getCategoryItems'
-import React from 'react'
+import { CatalogBlock } from "@/src/entities/Client";
+import { useGetCategoryItemsQuery } from "@/src/entities/Client/modal";
 
 export const CatalogBlockShopPage = () => {
-  return (
-    <CatalogBlock categories={mockData.categories} />
-  )
-}
+  const { data } = useGetCategoryItemsQuery();
+
+  if (!data) return null;
+  //каталога нет
+  
+  return <CatalogBlock categories={data?.data.categories} />;
+};

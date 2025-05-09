@@ -1,17 +1,14 @@
 "use client";
 import shareIcon from "@/public/share.svg";
-import {
-  useAddedToFavoritesApi,
-  useRemoveFromFavoritesApi,
-} from "@/src/entities/Client";
 import { IProductMoreInfo, LikeIcon } from "@/src/entities/Client/modal";
-import { copyTextToClipboard } from "@/src/shared/model/functions/copyToClipboard";
+import { ConvertImage } from "@/src/shared/hooks";
+import { Routes } from "@/src/shared/routes/routes";
 import { Button } from "@/src/shared/ui";
 import { IButtonTheme } from "@/src/shared/ui/Button/Button";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { FC, useEffect, useState } from "react";
-import { useAddedToCart } from "../model/mutate/addedToCart";
+import { useRouter } from "next/navigation";
+import { FC } from "react";
+import { useProductInfo } from "../model/hooks/productInfo";
 import styles from "./ProductInfo.module.scss";
 
 interface IProductInfo {
@@ -19,22 +16,15 @@ interface IProductInfo {
 }
 
 export const ProductInfo: FC<IProductInfo> = ({ productInfo }) => {
-  const { addedToCart } = useAddedToCart();
-  const [showBigImage, setShowBigImage] = useState<string | null>(null);
-  const [currentUrl, setCurrentUrl] = useState("");
-  const pathname = usePathname();
-  const { addedToFavorites } = useAddedToFavoritesApi();
-  const { removeFromFavorites } = useRemoveFromFavoritesApi();
-
-  useEffect(() => {
-    setCurrentUrl(`${window.location.origin}${pathname}`);
-  }, [pathname]);
-
-  const handleCopyUrl = () => {
-    if (currentUrl) {
-      copyTextToClipboard(currentUrl);
-    }
-  };
+  const navigate = useRouter();
+  const {
+    addedToCart,
+    addedToFavorites,
+    handleCopyUrl,
+    removeFromFavorites,
+    setShowBigImage,
+    showBigImage,
+  } = useProductInfo();
 
   return (
     <div className={styles.productInfo}>
@@ -42,12 +32,12 @@ export const ProductInfo: FC<IProductInfo> = ({ productInfo }) => {
         {productInfo.photos.map((photo) => (
           <button
             key={photo.id}
-            onClick={() => setShowBigImage(photo.url)}
+            onClick={() => setShowBigImage(photo.photo_url)}
             className={styles.photoButtonStyles}
             aria-label="Просмотреть изображение"
           >
-            <Image
-              src={photo.url}
+            <ConvertImage
+              url={photo.photo_url}
               alt={`Изображение товара ${productInfo.name}`}
               width={155}
               height={170}
@@ -58,8 +48,8 @@ export const ProductInfo: FC<IProductInfo> = ({ productInfo }) => {
         ))}
       </div>
       <div className={styles.mainInfo}>
-        <Image
-          src={showBigImage || productInfo.photos[0].url}
+        <ConvertImage
+          url={showBigImage || productInfo.photos[0].photo_url}
           alt={`Основное изображение товара ${productInfo.name}`}
           width={444}
           height={530}
@@ -79,7 +69,7 @@ export const ProductInfo: FC<IProductInfo> = ({ productInfo }) => {
                 <button
                   aria-label="Добавить в избранное"
                   onClick={() =>
-                    productInfo.is_favorite
+                    !productInfo.is_favorite
                       ? addedToFavorites.mutate({ id: productInfo.id })
                       : removeFromFavorites.mutate({ id: productInfo.id })
                   }
@@ -117,9 +107,15 @@ export const ProductInfo: FC<IProductInfo> = ({ productInfo }) => {
                 theme={IButtonTheme.BLUE}
                 className={styles.addedToCard}
                 aria-label="Добавить в корзину"
-                onClick={() => addedToCart.mutate({ item_id: productInfo.id })}
+                onClick={() =>
+                  productInfo.is_favorite
+                    ? navigate.push(Routes.CART)
+                    : addedToCart.mutate({ item_id: productInfo.id })
+                }
               >
-                Добавить в корзину
+                {productInfo.is_favorite
+                  ? "Перейти в корзину"
+                  : "Добавить в корзину"}
               </Button>
               <div className={styles.description}>
                 <h2 className={styles.title}>Описание</h2>

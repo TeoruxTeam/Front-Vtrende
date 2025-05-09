@@ -13,9 +13,10 @@ export const useAddedToFavorites = ({
   items: IProduct[];
   addedToFavorite?: (id: number, isFavorite: boolean) => void;
 }) => {
-  const { addedToFavorites, isLoading: addLoading } = useAddedToFavoritesApi();
+
+  const { addedToFavorites, isLoading: addLoading } = useAddedToFavoritesApi({});
   const { removeFromFavorites, isLoading: removeLoading } =
-    useRemoveFromFavoritesApi();
+    useRemoveFromFavoritesApi({});
   const [favoriteItems, setFavoriteItems] = useState<number[]>([]);
 
   useEffect(() => {

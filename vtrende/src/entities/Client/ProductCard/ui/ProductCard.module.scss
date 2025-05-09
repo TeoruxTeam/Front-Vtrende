@@ -13,12 +13,15 @@
     cursor: pointer;
 
     .photoInfo {
+      position: relative;
       width: 100%;
       height: 155px;
       position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
 
       .photoStyles {
-        background-color: #b7bab3;
+        background-color: var(--white);
         border-top-right-radius: 8px;
         border-top-left-radius: 8px;
         object-fit: contain;
@@ -42,7 +45,7 @@
         }
       }
 
-      .activeLikeStyles { 
+      .activeLikeStyles {
         background-color: var(--white);
         // cursor: default;
         &:hover {
@@ -112,22 +115,22 @@
         justify-content: space-between;
         align-items: center;
 
-        .shopMainInfo { 
+        .shopMainInfo {
           display: flex;
           gap: 5px;
           align-items: center;
         }
 
-        .shopAvatarStyles { 
+        .shopAvatarStyles {
           border-radius: 50%;
+          object-fit: cover;
         }
 
-        .shopName { 
+        .shopName {
           color: var(--light-gray);
           font-size: 10px;
           font-weight: 600;
         }
-
       }
     }
   }

@@ -1,9 +1,13 @@
 .cover {
-  background-color: green;
   height: 480px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   position: relative;
+
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   .shopInfo {
     background-color: #252525cc;
@@ -53,4 +57,8 @@
       }
     }
   }
+}
+
+.avatar { 
+  border-radius: 50%;
 }

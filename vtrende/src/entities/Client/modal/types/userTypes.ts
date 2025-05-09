@@ -8,4 +8,9 @@ export interface IUser {
   created_at: string;
   iin_bin: string;
   avatar: string;
+  background_image: string;
+  lat: number | null;
+  lng: number | null;
+  rating: number
+  phone_number: number
 }
