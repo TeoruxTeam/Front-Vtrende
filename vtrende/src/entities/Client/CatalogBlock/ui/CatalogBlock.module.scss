@@ -28,3 +28,31 @@
     }
   }
 }
+
+
+.skeletonCatalogBlock { 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .catalogBlockInfo { 
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .categoryBlockInfo { 
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .skeletonCard { 
+      width: 165px;
+    }
+  }
+
+  .skeletonProductCard {
+    display: flex;
+    gap: 25px;
+  }
+}

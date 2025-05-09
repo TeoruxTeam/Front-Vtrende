@@ -14,12 +14,10 @@ export const CatalogBlockInfo = () => {
     navigate.push(`${Routes.PRODUCT}/${itemId}`);
   };
 
-  if (!data) return null;
-
   return (
     <div className={styles.productList}>
       <CatalogBlock
-        categories={data.data?.categories}
+        categories={data?.data?.categories}
         onCardClick={handleCardClick}
       />
     </div>

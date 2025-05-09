@@ -34,5 +34,5 @@ export interface ICategory {
 }
 
 export interface IProductData {
-  categories: ICategory[];
+  categories: ICategory[] | undefined;
 }
