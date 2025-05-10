@@ -1,5 +1,5 @@
+import { useGetCategoryQuery } from "@/src/entities/Client/modal";
 import { useEffect, useState } from "react";
-import { useGetCategoryQuery } from "../api/query/getCategory";
 
 export const useCategory = () => {
   const [openCategory, setOpenCategory] = useState(false);

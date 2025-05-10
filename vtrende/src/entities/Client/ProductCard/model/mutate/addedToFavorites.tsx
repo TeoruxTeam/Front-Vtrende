@@ -3,8 +3,8 @@ import api from "@/src/shared/api/api";
 import { useMutation } from "@tanstack/react-query";
 import { useGetProductInfoQuery } from "./ProductInfo/getProductInfo";
 
-export const useAddedToFavoritesApi = ({ id }: { id?: number }) => {
-  const { refetch } = useGetProductInfoQuery({ item_id: id ?? null });
+export const useAddedToFavoritesApi = ({ id }: { id: number }) => {
+  const { refetch } = useGetProductInfoQuery({ item_id: id });
 
   const addedToFavorites = useMutation({
     mutationKey: ["added_to_favorites"],

@@ -16,5 +16,6 @@ export const useGetProductInfoQuery = (params: IGetProductInfoQueryParams) => {
       );
       return response.data;
     },
+    retry: 0
   });
 };

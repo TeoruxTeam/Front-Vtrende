@@ -5,6 +5,7 @@ import styles from "./Input.module.scss";
 export enum IInputTheme {
   GRAY = "gray",
   LIGHT = "light",
+  BLUE = 'blue'
 }
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {

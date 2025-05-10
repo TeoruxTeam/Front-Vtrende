@@ -1,6 +1,7 @@
 "use client";
 import shareIcon from "@/public/share.svg";
-import { IProductMoreInfo, LikeIcon } from "@/src/entities/Client/modal";
+import { FavoriteButton } from "@/src/entities/Client/FavoriteButton/ui/FavoriteButton";
+import { IProductMoreInfo } from "@/src/entities/Client/modal";
 import { ConvertImage } from "@/src/shared/hooks";
 import { Routes } from "@/src/shared/routes/routes";
 import { Button } from "@/src/shared/ui";
@@ -35,6 +36,7 @@ export const ProductInfo: FC<IProductInfo> = ({ productInfo }) => {
             onClick={() => setShowBigImage(photo.photo_url)}
             className={styles.photoButtonStyles}
             aria-label="Просмотреть изображение"
+            disabled={photo.photo_url === (showBigImage || productInfo.photos[0].photo_url)}
           >
             <ConvertImage
               url={photo.photo_url}
@@ -66,21 +68,12 @@ export const ProductInfo: FC<IProductInfo> = ({ productInfo }) => {
                 Пожаловаться
               </button>
               <div className={styles.action}>
-                <button
-                  aria-label="Добавить в избранное"
-                  onClick={() =>
-                    !productInfo.is_favorite
-                      ? addedToFavorites.mutate({ id: productInfo.id })
-                      : removeFromFavorites.mutate({ id: productInfo.id })
-                  }
-                >
-                  <LikeIcon
-                    width={21}
-                    height={21}
-                    fill={productInfo.is_favorite ? "#0047AB" : "transparent"}
-                    stroke={productInfo.is_favorite ? "#fff" : "#252525"}
-                  />
-                </button>
+                <FavoriteButton
+                  isFavorite={productInfo.is_favorite}
+                  productId={productInfo.id}
+                  addedToFavorites={addedToFavorites.mutate}
+                  removeFromFavorites={removeFromFavorites.mutate}
+                />
                 <button onClick={handleCopyUrl} aria-label="Поделиться товаром">
                   <Image
                     src={shareIcon}
@@ -108,12 +101,12 @@ export const ProductInfo: FC<IProductInfo> = ({ productInfo }) => {
                 className={styles.addedToCard}
                 aria-label="Добавить в корзину"
                 onClick={() =>
-                  productInfo.is_favorite
+                  productInfo.is_in_cart
                     ? navigate.push(Routes.CART)
                     : addedToCart.mutate({ item_id: productInfo.id })
                 }
               >
-                {productInfo.is_favorite
+                {productInfo.is_in_cart
                   ? "Перейти в корзину"
                   : "Добавить в корзину"}
               </Button>

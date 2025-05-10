@@ -13,10 +13,10 @@ export const useProductInfo = () => {
 
   const itemId = (id as string) || id[0];
 
-  const { addedToCart } = useAddedToCart();
   const [showBigImage, setShowBigImage] = useState<string | null>(null);
   const [currentUrl, setCurrentUrl] = useState("");
   const pathname = usePathname();
+  const { addedToCart } = useAddedToCart({ id: Number(itemId) });
   const { addedToFavorites } = useAddedToFavoritesApi({ id: Number(itemId) });
   const { removeFromFavorites } = useRemoveFromFavoritesApi({
     id: Number(itemId),

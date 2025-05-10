@@ -1,0 +1,19 @@
+.shopMapInfo { 
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 396px;
+  padding: 25px 45px;
+  background-color: var(--white);
+  width: 488px;
+  border-radius: 20px;
+
+  .address { 
+    border: 1px solid #DFE9F2;
+    border-radius: 8px;
+    color: var(--light-gray);
+    font-size: 16px;
+    font-weight: 400;
+    padding: 14px;
+  }
+}

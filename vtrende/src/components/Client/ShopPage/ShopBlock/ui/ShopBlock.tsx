@@ -14,7 +14,7 @@ export const ShopBlock: FC<IShopBlockProps> = ({ shopInfo }) => {
     <div className={styles.shopInfo}>
       <ShopMainInfo shopInfo={shopInfo} />
       <AdditionalShopInformation shopInfo={shopInfo} />
-      <CatalogBlockShopPage />
+      <CatalogBlockShopPage shop_id={shopInfo.id} />
     </div>
   );
 };

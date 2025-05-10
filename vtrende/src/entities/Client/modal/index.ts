@@ -8,4 +8,6 @@ export type {
 export type { IShopInfo } from "./types/shopTypes";
 export { getCategoryItemsFetch } from "./hooks/getCategoryItems";
 export { useGetCategoryItemsQuery } from "./hooks/getCategoryItems";
-export type { Categories } from "./types/categoryTypes";
+export type { ICategoriesWithData } from "./types/categoryTypes";
+export { useGetCategoryQuery } from "./hooks/getCategory";
+export { useGetShopItemsQuery } from "./hooks/getShopItems";

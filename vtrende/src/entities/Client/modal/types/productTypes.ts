@@ -1,3 +1,5 @@
+export type IProductType = 'product' | 'service' 
+
 interface Photo {
   id: number;
   photo_url: string;
@@ -17,8 +19,7 @@ export interface IProduct {
   is_favorite: boolean;
   shop_name: string;
   shop_rating: number;
-  // views: number;
-  // purchases: number;
+  is_in_cart: boolean
 }
 
 export interface IProductMoreInfo
@@ -35,4 +36,8 @@ export interface ICategory {
 
 export interface IProductData {
   categories: ICategory[] | undefined;
+}
+
+export interface IProductWithData<T> { 
+  data: T
 }

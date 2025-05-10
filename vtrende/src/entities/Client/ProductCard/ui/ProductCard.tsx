@@ -14,12 +14,14 @@ interface IProductCardProps {
   items: IProduct[];
   addedToFavorite?: (id: IProduct["id"], isFavorite: boolean) => void;
   onCardClick?: (itemId: IProduct["id"]) => void;
+  className?: string;
 }
 
 export const ProductCard: FC<IProductCardProps> = ({
   items,
   addedToFavorite,
   onCardClick,
+  className,
 }) => {
   const { favoriteItems, handleToggleFavorites, addLoading, removeLoading } =
     useAddedToFavorites({
@@ -28,7 +30,7 @@ export const ProductCard: FC<IProductCardProps> = ({
     });
 
   return (
-    <div className={styles.productCard}>
+    <div className={classNames(styles.productCard, className)}>
       {items &&
         items.map((item) => (
           <div

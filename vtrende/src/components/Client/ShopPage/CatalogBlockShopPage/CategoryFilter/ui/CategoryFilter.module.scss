@@ -1,0 +1,50 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+
+  .title {
+    color: var(--black);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .categoryBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-radius: 8px;
+    background-color: var(--white);
+    color: var(--black);
+    font-size: 16px;
+    font-weight: 400;
+    min-width: 265px;
+  }
+}
+
+.select {
+  max-width: 265px;
+  top: 80px;
+  position: absolute;
+  z-index: 100;
+}
+
+// .arrowDown {
+//   transition: transform 0.3s ease;
+// }
+
+// .arrowWrapper {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: 10px;
+//   height: 10px;
+// }
+
+// .arrowUp {
+//   transform: rotate(180deg);
+//   transform-origin: center;
+//   transition: transform 0.3s ease;
+// }

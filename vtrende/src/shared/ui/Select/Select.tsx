@@ -1,50 +1,77 @@
-import React, { useState } from "react";
-import styles from "./Select.module.css";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Select.tsx
+import React, { useEffect, useRef } from "react";
+import styles from "./Select.module.scss";
 
-interface SelectProps {
-  options: string[];
-  defaultOption?: string;
-  icon?: string;
-  onChange?: (selected: string) => void; 
+interface SelectProps<T> {
+  options: T[];
+  valueKey: keyof T;
+  labelKey: keyof T;
+  value?: T[keyof T];
+  onChange: (value: T[keyof T]) => void;
+  className?: string;
+  isOpen: boolean;
+  setOpen: (open: boolean) => void;
+  triggerRef?: React.RefObject<HTMLElement>;
 }
 
-export const Select: React.FC<SelectProps> = ({
+export const Select = <T extends Record<string, any>>({
   options,
-  defaultOption,
-  icon,
+  valueKey,
+  labelKey,
+  value,
   onChange,
-}) => {
-  const [selected, setSelected] = useState(defaultOption || options[0] || "");
-  const [isOpen, setIsOpen] = useState(false);
+  className,
+  isOpen,
+  setOpen,
+  triggerRef,
+}: SelectProps<T>): JSX.Element => {
+  const selectRef = useRef<HTMLDivElement>(null);
 
-  const handleSelect = (option: string) => {
-    setSelected(option);
-    setIsOpen(false);
-    if (onChange) {
-      onChange(option);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const clickedOnTrigger = triggerRef?.current?.contains(
+        event.target as Node
+      );
+      const clickedOnSelect = selectRef.current?.contains(event.target as Node);
+
+      if (!clickedOnSelect && !clickedOnTrigger) {
+        setOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
     }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, setOpen, triggerRef]);
+
+  const handleOptionClick = (option: T) => {
+    onChange(option[valueKey]);
+    setOpen(false);
   };
 
   return (
-    <div className={styles.select}>
-      <div className={styles.selectHeader} onClick={() => setIsOpen(!isOpen)}>
-        {icon && <span className={styles.icon}>{icon}</span>}
-        <span className={styles.selected}>{selected}</span>
-        <span className={styles.arrow}>{isOpen ? "▲" : "▼"}</span>
-      </div>
-      {isOpen && (
-        <ul className={styles.selectList}>
-          {options.map((option) => (
-            <li
-              key={option}
-              className={styles.selectItem}
-              onClick={() => handleSelect(option)}
-            >
-              {option}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div
+      ref={selectRef}
+      className={className ? `${styles.select} ${className}` : styles.select}
+    >
+      {options.map((option, index) => (
+        <div
+          key={index}
+          className={styles.option}
+          onClick={() => handleOptionClick(option)}
+          style={{
+            backgroundColor:
+              value === option[valueKey] ? "#e6f0ff" : "transparent",
+          }}
+        >
+          {option[labelKey] as string}
+        </div>
+      ))}
     </div>
   );
 };

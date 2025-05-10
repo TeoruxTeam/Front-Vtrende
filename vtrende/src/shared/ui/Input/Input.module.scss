@@ -21,7 +21,7 @@
   color: $white;
 
   font-size: 14px;
-  
+
   &::placeholder {
     color: $light-gray;
   }
@@ -30,16 +30,30 @@
 .light {
   border: 1px solid #dedee9;
   background-color: $white;
-  
   font-size: 14px;
+  color: #252525 !important;
+
   &:focus {
     border: 1px solid #0047ab;
   }
 
-  color: #252525 !important;
-
   &::placeholder {
     color: #252525 !important;
+  }
+}
+
+.blue {
+  width: 160px;
+  height: 40px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #dfe9f2;
+  color: var(--light-gray) !important;
+  font-size: 16px;
+  font-weight: 600;
+
+  &:focus {
+    border-color: #0066cc;
   }
 }
 

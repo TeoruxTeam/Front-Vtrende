@@ -1,0 +1,30 @@
+.shopItems {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+
+  .filters {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: end;
+    width: 100%;
+    padding: 0 5px;
+
+    .filtersInfo {
+      display: flex;
+      align-items: start;
+      gap: 25px;
+    }
+  }
+}
+
+.items {
+  flex-wrap: wrap;
+  align-self: start;
+}
+
+.nothingItems {
+  min-height: 261px;
+}

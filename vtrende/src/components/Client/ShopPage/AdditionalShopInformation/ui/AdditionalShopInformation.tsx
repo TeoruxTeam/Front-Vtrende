@@ -6,9 +6,11 @@ import { formatPhoneNumber } from "@/src/shared/model";
 import { copyTextToClipboard } from "@/src/shared/model/functions/copyToClipboard";
 import { Button } from "@/src/shared/ui";
 import { IButtonTheme } from "@/src/shared/ui/Button/Button";
+import { Modal } from "@/src/shared/ui/Modal/Modal";
 import classNames from "classnames";
 import Image from "next/image";
-import { FC } from "react";
+import { FC, useState } from "react";
+import { ShopMapInfo } from "../ShopMapInfo/ui/ShopMapInfo";
 import styles from "./AdditionalShopInformation.module.scss";
 
 interface IShopInfoProps {
@@ -21,6 +23,8 @@ function getWeekDay(date: Date) {
 }
 
 export const AdditionalShopInformation: FC<IShopInfoProps> = ({ shopInfo }) => {
+  const [openMap, setOpenMap] = useState(false);
+
   const scheduleItems = [
     { day: "ПН", time: shopInfo.schedule.monday },
     { day: "ВТ", time: shopInfo.schedule.tuesday },
@@ -50,7 +54,12 @@ export const AdditionalShopInformation: FC<IShopInfoProps> = ({ shopInfo }) => {
                 <p className={styles.shopName}>{shopInfo.address}</p>
               </div>
             </div>
-            <Button theme={IButtonTheme.CYAN} className={styles.addressButton}>
+            <Button
+              theme={IButtonTheme.CYAN}
+              className={styles.addressButton}
+              onClick={() => setOpenMap(true)}
+              disabled={!shopInfo.lat && !shopInfo.lng}
+            >
               Открыть на карте
             </Button>
           </div>
@@ -87,12 +96,22 @@ export const AdditionalShopInformation: FC<IShopInfoProps> = ({ shopInfo }) => {
                 getWeekDay(new Date()) === day && styles.activeDate,
                 time === "closed" && styles.closed
               )}
-            > 
+            >
               {day}: {time}
             </p>
           ))}
         </div>
       </div>
+      {openMap && (
+        <Modal
+          isOpen={openMap}
+          onClose={() => {
+            setOpenMap(false);
+          }}
+        >
+          <ShopMapInfo latitude={shopInfo.lat} longitude={shopInfo.lng} address={shopInfo.address} />
+        </Modal>
+      )}
     </div>
   );
 };
