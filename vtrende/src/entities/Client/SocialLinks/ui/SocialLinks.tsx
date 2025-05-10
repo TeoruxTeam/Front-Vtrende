@@ -42,7 +42,7 @@ export const SocialLinks: FC<ISocialLinksProps> = ({
   return (
     <div className={classNames(styles.socialLinks, className)}>
       {socialLinks.map((socialLink) => (
-        <Link href={socialLink.value} key={socialLink.value}>
+        <Link href={socialLink.value} key={socialLink.value} target="_blank">
           {showSocialLink(socialLink.social_type)}
         </Link>
       ))}

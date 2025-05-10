@@ -6,6 +6,7 @@ import { formatPhoneNumber } from "@/src/shared/model";
 import { copyTextToClipboard } from "@/src/shared/model/functions/copyToClipboard";
 import { Button } from "@/src/shared/ui";
 import { IButtonTheme } from "@/src/shared/ui/Button/Button";
+import classNames from "classnames";
 import Image from "next/image";
 import { FC } from "react";
 import styles from "./AdditionalShopInformation.module.scss";
@@ -14,7 +15,22 @@ interface IShopInfoProps {
   shopInfo: IShopInfo;
 }
 
+function getWeekDay(date: Date) {
+  const days = ["ВС", "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"];
+  return days[date.getDay()];
+}
+
 export const AdditionalShopInformation: FC<IShopInfoProps> = ({ shopInfo }) => {
+  const scheduleItems = [
+    { day: "ПН", time: shopInfo.schedule.monday },
+    { day: "ВТ", time: shopInfo.schedule.tuesday },
+    { day: "СР", time: shopInfo.schedule.wednesday },
+    { day: "ЧТ", time: shopInfo.schedule.thursday },
+    { day: "ПТ", time: shopInfo.schedule.friday },
+    { day: "СБ", time: shopInfo.schedule.saturday },
+    { day: "ВС", time: shopInfo.schedule.sunday },
+  ];
+
   return (
     <div className={styles.additionalShopInformation}>
       <div className={styles.additional}>
@@ -51,14 +67,32 @@ export const AdditionalShopInformation: FC<IShopInfoProps> = ({ shopInfo }) => {
             <Button
               theme={IButtonTheme.CYAN}
               className={styles.addressButton}
-              onClick={() => copyTextToClipboard(shopInfo.phone_number, "Номер скопирован")}
+              onClick={() =>
+                copyTextToClipboard(shopInfo.phone_number, "Номер скопирован")
+              }
             >
               Позвонить
             </Button>
           </div>
         </div>
       </div>
-      <div className={styles.schedule}>dsa</div>
+      <div className={styles.schedule}>
+        <p className={styles.title}>График работы</p>
+        <div className={styles.chart}>
+          {scheduleItems.map(({ day, time }) => (
+            <p
+              key={day}
+              className={classNames(
+                styles.date,
+                getWeekDay(new Date()) === day && styles.activeDate,
+                time === "closed" && styles.closed
+              )}
+            > 
+              {day}: {time}
+            </p>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
